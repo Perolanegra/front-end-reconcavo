@@ -35,7 +35,7 @@ export class AppComponent extends NgFormDefault {
     this.setForm();
     this.appController.handleAutoCompleteEntity(this.formControls.drugstore, this.formControls.drugstoreId, this.updateDrugstoreByName);
     this.appController.handleAutoCompleteEntity(this.formControls.street, this.formControls.streetId, this.updateStreetsByName);
-
+    this.appController.handleAutoCompleteEntity(this.formControls.storeByStreet, this.formControls.storeByStreetId, this.updateStreetsByName);
     // this.appController.setElementStyle(document.querySelector('.mat-dialog-container'), 'box-shadow', 'none');
   }
 
@@ -45,11 +45,14 @@ export class AppComponent extends NgFormDefault {
     this.form.addControl('streetId', new FormControl(null));
     this.form.addControl('drugstore', new FormControl(null));
     this.form.addControl('drugstoreId', new FormControl(null));
+    this.form.addControl('storeByStreet', new FormControl(null));
+    this.form.addControl('storeByStreetId', new FormControl(null));
     this.form.addControl('max_results', new FormControl(null));
+    this.form.addControl('flg_round_the_clock', new FormControl(null));
   }
 
-  openModal(formControlName: string, input: any) {
-    const dialogRef = this.appController.openDialog(null, MaxLengthDialogComponent);
+  openModal(formControlName: string, input?: any, payload?: any) {
+    const dialogRef = this.appController.openDialog(payload, MaxLengthDialogComponent);
     dialogRef.afterClosed().subscribe(dataEmitted => {
       if (dataEmitted) {
         this.form.get(formControlName)?.setValue(dataEmitted);
@@ -65,9 +68,9 @@ export class AppComponent extends NgFormDefault {
 
   private updateDrugstoreByName = (pValue: string) => {
     this.filteredDrugstores = [
-      { name: 'Farmácia São Paulo', id: 1 },
-      { name: 'Farmácia São Paulo', id: 2 },
-      { name: 'Farmácia São Paulo', id: 3 },
+      { name: 'Farmácia São Paulo', id: 1, idNeighborhood: { id: 1, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
+      { name: 'Drogaria puta', id: 2, idNeighborhood: { id: 2, name: "Barroquinha" }, roundTheClock: true, foundationDate: '06/09/2020' },
+      { name: 'S São Paulo', id: 3, idNeighborhood: { id: 3, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
     ];
 
     // this.service.obterUsuariosPorTermo(pValue).subscribe(
@@ -80,9 +83,9 @@ export class AppComponent extends NgFormDefault {
 
   private updateStreetsByName = (pValue: string) => {
     this.filteredStreets = [
-      { name: 'Farmácia São Paulo', id: 1 },
-      { name: 'Farmácia São Paulo', id: 2 },
-      { name: 'Farmácia São Paulo', id: 3 },
+      { id: 6, name: "Barra" },
+      { id: 6, name: "Barra" },
+      { id: 6, name: "Barra" },
     ];
 
     // this.service.obterUsuariosPorTermo(pValue).subscribe(
@@ -93,12 +96,32 @@ export class AppComponent extends NgFormDefault {
     //   });
   }
 
-  selected(event: any): void {
+  private updateStoreByStreetId = (pValue: string) => {
+    this.filteredDrugstores = [
+      { name: 'FOdasse mudei', id: 1, idNeighborhood: { id: 1, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
+    ];
+  }
+
+  selected(event: any, storeByStreet: boolean = false): void {
     // this.appController.openDialog();
+    if(storeByStreet) {
+      event.option.value
+      // fazer a request enviando o id do bairro  e flg_round_the_clock
+      this.openStoreByStreetModal('storeByStreetId');
+    }
     console.log('valor selecionado: ', event.option.value);
+    // (click)="openStoreByStreetModal('max')"
     
-    // this.chipsDestinatarios.push(event.option.value);
-    this.formControls.optionPara.setValue(null);
+  }
+
+  openStoreByStreetModal(formControlName: string) {
+    const dialogRef = this.appController.openDialog(null, MaxLengthDialogComponent);
+    dialogRef.afterClosed().subscribe(dataEmitted => {
+      if (dataEmitted) {
+        this.form.get(formControlName)?.setValue(dataEmitted);
+        // this.ref.markForCheck();
+      }
+    });
   }
 
 }

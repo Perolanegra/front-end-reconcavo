@@ -13,7 +13,8 @@
         </div>
     </div>
 
-    <div class="align-check" [ngClass]="[ maxLength ? 'enabled' : 'disabled' ]">
+    <div class="align-check" 
+        [ngClass]="[ maxLength ? 'enabled' : 'disabled' ]">
         <button tabindex="-1" mat-icon-button (click)="close(maxLength)">
             <mat-icon class="align-check">checked</mat-icon>
         </button>

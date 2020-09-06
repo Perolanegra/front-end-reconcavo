@@ -49,6 +49,16 @@
     z-index: 99999;
 }
 
+.terminal-out {
+    display: flex;
+    justify-content: space-around; 
+    width: 100%;
+}
+
+.terminal-out__mobile {
+    flex-direction: column;
+}
+
 @media only screen and (max-width: 1024px) {
     .header-flex {
         flex-direction: column;
