@@ -1,0 +1,21 @@
+<div class="toast-out toast-box-btn fade-transition-out">
+    <div class="content">
+        <mat-form-field class="fade-transition-in font" style="width: 100%; margin-top: 5%;">
+            <mat-label class="label-info">Informe um número máximo de registros:</mat-label>
+            <input matInput class="font" autocomplete='off' [(ngModel)]="maxLength" maxlength="3" type="number"
+                required>
+        </mat-form-field>
+
+        <div>
+            <button style="outline:none;" tabindex="-1" mat-icon-button (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="align-check" [ngClass]="[ maxLength ? 'enabled' : 'disabled' ]">
+        <button tabindex="-1" mat-icon-button (click)="close(maxLength)">
+            <mat-icon class="align-check">checked</mat-icon>
+        </button>
+    </div>
+</div>

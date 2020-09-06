@@ -1,0 +1,61 @@
+.toast-out {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #22262e;
+  border-radius: 5px 5px 0px 0px;
+  width: 20vw;
+  height: 10vh;
+}
+
+::ng-deep .mat-dialog-container {
+  overflow: hidden;
+  padding: 20px 5px 25px 20px;
+  background: #22262e;
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  color: white;
+  width: 100%;
+}
+
+.label-info {
+  color: white !important;
+}
+
+::ng-deep .mat-icon-button i,
+.mat-icon-button .mat-icon {
+  line-height: 24px;
+  margin-top: 4px;
+  outline: none;
+}
+
+.toast-box-btn {
+  border-radius: 0px 0px 5px 5px !important;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.align-check {
+  width: 100%;
+  position: relative;
+  top: -10%;
+  color: green;
+}
+
+@media only screen and (max-width: 1024px) {
+  ::ng-deep .mat-icon-button i,
+  .mat-icon-button .mat-icon {
+    line-height: 24px;
+    outline: none;
+    font-size: 20px;
+  }
+
+  .toast-in-align {
+    padding-left: 20px;
+  }
+}

@@ -1,0 +1,61 @@
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0 !important;
+}
+
+.flexbox {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-field__default {
+    display: flex;
+    position: relative;
+    font-weight: 600;
+    width: 150px;
+    left: 20%;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: white;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: white;
+}
+
+.search-icon {
+    position: relative; 
+    left: 15px; 
+    cursor: pointer; 
+    width: 80px;
+    z-index: 99999;
+}
+
+@media only screen and (max-width: 1024px) {
+    .header-flex {
+        flex-direction: column;
+        height: 30vh;
+    }
+
+    .align-autocomplete {
+        width: unset !important;
+    }
+}
