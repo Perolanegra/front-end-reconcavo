@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "reconcavo"
+  "defaultProject": "reconcavo",
+  "cli": {
+    "analytics": false
+  }
 }
