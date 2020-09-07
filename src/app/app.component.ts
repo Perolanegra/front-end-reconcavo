@@ -73,8 +73,8 @@ export class AppComponent extends NgFormDefault {
   private updateDrugstoreByName = (pValue: string) => {
     this.filteredDrugstores = [
       { name: 'Farmácia São Paulo', id: 1, idNeighborhood: { id: 1, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
-      { name: 'Drogaria puta', id: 2, idNeighborhood: { id: 2, name: "Barroquinha" }, roundTheClock: true, foundationDate: '06/09/2020' },
-      { name: 'S São Paulo', id: 3, idNeighborhood: { id: 3, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
+      { name: 'Drogaria Boa Saúde', id: 2, idNeighborhood: { id: 2, name: "Av 7" }, roundTheClock: true, foundationDate: '06/09/2020' },
+      { name: 'S São Paulo', id: 3, idNeighborhood: { id: 3, name: "Cabula" }, roundTheClock: false, foundationDate: '06/09/2020' },
     ];
 
     // this.service.obterUsuariosPorTermo(pValue).subscribe(
@@ -108,19 +108,15 @@ export class AppComponent extends NgFormDefault {
 
   selected(ev: any, storeByStreet: boolean = false): void {
     console.log('valor selecionado: ', ev.option.value);
-    if(storeByStreet) {
+    if (storeByStreet) {
       const { id, name } = ev.option.value;
       const submit = { id_neighborhood: id, flg_round_the_clock: name };
       this.store.dispatch(new DrugstoreActions.GetByStreetId(submit))
-      .subscribe(resp => {
-        if(resp) {
-          // const payload = { ...resp, width: '', height: '50%' };
-          // console.log('resp: ', payload);
-          this.openStoreByStreetModal('storeByStreetId', resp);
-        }
-      });
+        .subscribe(resp => {
+          if (resp) this.openStoreByStreetModal('storeByStreetId', resp);
+        });
     }
-    
+
   }
 
   openStoreByStreetModal(formControlName: string, payload: any) {

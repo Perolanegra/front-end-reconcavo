@@ -11,10 +11,6 @@ import { AppController } from 'src/app/core/appController';
 })
 export class DrugstoreDetailComponent implements OnInit {
 
-  public name: any = 'teste';
-  public foundationDate: any = 'teste';
-  public flg_round_the_clock: boolean = false;
-
   constructor(
     public dialogRef: MatDialogRef<DrugstoreDetailComponent>,
     protected formBuilder: FormBuilder,
@@ -25,6 +21,11 @@ export class DrugstoreDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewChecked() {
+    this.renderer.setStyle(document.querySelectorAll('.mat-form-field-wrapper')[3] as any, 'padding-bottom', 'unset');
+    console.log('data: ', this.data);
   }
 
   close(data?: any) {

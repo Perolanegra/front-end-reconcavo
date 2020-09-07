@@ -46,8 +46,23 @@
   color: green;
 }
 
-::ng-deep div.mat-form-field-appearance-legacy .mat-form-field-wrapper:nth-child(4) {
-  padding-bottom: unset;
+.close-icon {
+  color: white;
+  position: relative;
+  top: -20px;
+  left: 3%;
+}
+
+.font {
+  line-height: 25px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
+  opacity: 0;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-wrapper:nth-child(1) {
+  padding-bottom: 0.3em;
 }
 
 @media only screen and (max-width: 1024px) {

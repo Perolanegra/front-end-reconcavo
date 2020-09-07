@@ -57,9 +57,7 @@ export class DrugstoreState {
         const data: any = await this.drugstoreService.getStoreByStreet(payload);
 
         if (data) {
-            setState({
-                ...data
-            });
+            setState(data);
         }
     }
 
