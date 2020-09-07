@@ -9,12 +9,6 @@
   height: 10vh;
 }
 
-::ng-deep .mat-dialog-container {
-  overflow: hidden;
-  padding: 20px 5px 25px 20px;
-  background: #22262e;
-}
-
 .content {
   display: flex;
   justify-content: space-around;
@@ -40,12 +34,10 @@
   text-transform: uppercase;
 }
 
-.align-check {
-  width: 100%;
-  position: relative;
-  top: -10%;
-  color: green;
+.mobile {
+  margin-top: 5%;
 }
+
 
 @media only screen and (max-width: 1024px) {
   ::ng-deep .mat-icon-button i,
@@ -55,7 +47,25 @@
     font-size: 20px;
   }
 
+  .toast-out {
+    width: unset;
+    max-width: 90vw;
+  }
+
   .toast-in-align {
     padding-left: 20px;
   }
+
+  .mobile {
+    margin-top: unset;
+    position: relative;
+    top: 30%;
+  }
+
+  .align-close {
+    position: relative;
+    right: -10%;
+    top: -15%;
+  }
+
 }

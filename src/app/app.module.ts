@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './core/material.module';
 import { AppController } from './core/appController';
 import { MaxLengthDialogComponent } from './dialogs/maxLength/max-length-dialog.component';
-import { DrugstoreDetailComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
+import { DrugstoreDetailDialogComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { DrugstoreService } from './core/drugstore.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,12 +19,18 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { DrugstoreState } from './state/drugstore/drugstore.state';
 import { AppState } from './state/app/app.state';
+import { AddStreetDialogComponent } from './dialogs/add-street/add-street-dialog.component';
+import { StreetService } from './core/street.service';
+import { StreetState } from './state/street/street.state';
+import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MaxLengthDialogComponent,
-    DrugstoreDetailComponent,
+    DrugstoreDetailDialogComponent,
+    AddStreetDialogComponent,
+    AddStoreDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +40,7 @@ import { AppState } from './state/app/app.state';
     MaterialModule,
     FormsModule,
     HttpClientModule,
-    NgxsModule.forRoot([DrugstoreState, AppState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([DrugstoreState, AppState, StreetState], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
       // key: ['state.prop'],
     }),
@@ -46,9 +52,11 @@ import { AppState } from './state/app/app.state';
   ],
   entryComponents: [
     MaxLengthDialogComponent,
-    DrugstoreDetailComponent
+    DrugstoreDetailDialogComponent,
+    AddStreetDialogComponent,
+    AddStoreDialogComponent
   ],
-  providers: [AppController, DrugstoreService,],
+  providers: [AppController, DrugstoreService, StreetService,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

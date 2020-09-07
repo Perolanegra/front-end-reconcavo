@@ -1,0 +1,22 @@
+<div class="toast-out toast-box-btn fade-transition-out">
+    <div class="content">
+        <mat-form-field class="fade-transition-in font" style="width: 100%;">
+            <mat-label class="label-info">Informe o nome do Bairro:</mat-label>
+            <input matInput class="font" autocomplete='off' [(ngModel)]="streetName" maxlength="4" type="text"
+                required>
+        </mat-form-field>
+
+        <div class="close">
+            <button style="outline:none;" tabindex="-1" mat-icon-button (click)="close()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="align-check" 
+        [ngClass]="[ streetName ? 'enabled' : 'disabled' ]">
+        <button tabindex="-1" mat-icon-button (click)="submit()">
+            <mat-icon class="align-check">checked</mat-icon>
+        </button>
+    </div>
+</div>

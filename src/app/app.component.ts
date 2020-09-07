@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { AppController } from './core/appController';
 import { NgFormDefault } from './core/ng-form-default';
 import { FormBuilder, FormControl } from '@angular/forms';
@@ -7,8 +7,12 @@ import { MaxLengthDialogComponent } from './dialogs/maxLength/max-length-dialog.
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DrugstoreActions } from './state/drugstore/drugstore.actions';
 import { Store, Select } from '@ngxs/store';
-import { DrugstoreDetailComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
+import { DrugstoreDetailDialogComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
 import { AppActions } from './state/app/app.actions';
+import { AddStreetDialogComponent } from './dialogs/add-street/add-street-dialog.component';
+import { ComponentType } from '@angular/cdk/portal';
+import { StreetActions } from './state/street/street.actions';
+import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +24,9 @@ export class AppComponent extends NgFormDefault {
   public filteredDrugstores: any;
 
   public mobileQuery: MediaQueryList;
+  public maxLengthDialogComponent = MaxLengthDialogComponent;
+  public addStreetDialogComponent = AddStreetDialogComponent;
+  public addStoreDialogComponent = AddStoreDialogComponent;
 
   constructor(protected appController: AppController,
     protected formBuilder: FormBuilder,
@@ -42,7 +49,6 @@ export class AppComponent extends NgFormDefault {
     this.appController.handleAutoCompleteEntity(this.formControls.drugstore, this.formControls.drugstoreId, this.updateDrugstoreByName);
     this.appController.handleAutoCompleteEntity(this.formControls.street, this.formControls.streetId, this.updateStreetsByName);
     this.appController.handleAutoCompleteEntity(this.formControls.storeByStreet, this.formControls.storeByStreetId, this.updateStreetsByName);
-    // this.appController.setElementStyle(document.querySelector('.mat-dialog-container'), 'box-shadow', 'none');
   }
 
 
@@ -57,49 +63,22 @@ export class AppComponent extends NgFormDefault {
     this.form.addControl('flg_round_the_clock', new FormControl(null));
   }
 
-  openModal(formControlName: string, input?: any, payload?: any) {
-    const dialogRef = this.appController.openDialog(payload, MaxLengthDialogComponent);
-    dialogRef.afterClosed().subscribe(dataEmitted => {
-      if (dataEmitted) {
-        this.form.get(formControlName)?.setValue(dataEmitted);
-        input ? input.focus() : null;
-        // this.ref.markForCheck();
-      }
-    });
-  }
-
   tendi() {
     console.log('ok: ', this.formControls.max_results.value);
   }
 
-  private updateDrugstoreByName = (pValue: string) => {
-    this.filteredDrugstores = [
-      { name: 'Farmácia São Paulo', id: 1, idNeighborhood: { id: 1, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
-      { name: 'Drogaria Boa Saúde', id: 2, idNeighborhood: { id: 2, name: "Av 7" }, roundTheClock: true, foundationDate: '06/09/2020' },
-      { name: 'S São Paulo', id: 3, idNeighborhood: { id: 3, name: "Cabula" }, roundTheClock: false, foundationDate: '06/09/2020' },
-    ];
-
-    // this.service.obterUsuariosPorTermo(pValue).subscribe(
-    //   (resp: any) => {
-    //     this.filteredDrugstores = resp;
-    //   }, (error: any) => {
-    //     throw new Error(error);
-    //   });
+  private updateDrugstoreByName = (value: string) => {
+    this.store.dispatch(new DrugstoreActions.UpdateStoreByName({ name: value }))
+      .subscribe(resp => {
+        this.filteredDrugstores = resp?.drugstore;
+      });
   }
 
-  private updateStreetsByName = (pValue: string) => {
-    this.filteredStreets = [
-      { id: 6, name: "Barra" },
-      { id: 6, name: "Barra" },
-      { id: 6, name: "Barra" },
-    ];
-
-    // this.service.obterUsuariosPorTermo(pValue).subscribe(
-    //   (resp: any) => {
-    //     this.drugstore = resp;
-    //   }, (error: any) => {
-    //     throw new Error(error);
-    //   });
+  private updateStreetsByName = (value: string) => {
+    this.store.dispatch(new StreetActions.UpdateStreetsByName({ name: value }))
+      .subscribe(resp => {
+        this.filteredStreets = resp?.street;
+      });
   }
 
   private updateStoreByStreetId = (pValue: string) => {
@@ -115,20 +94,39 @@ export class AppComponent extends NgFormDefault {
       const submit = { id_neighborhood: id, flg_round_the_clock: name };
       this.store.dispatch(new DrugstoreActions.GetByStreetId(submit))
         .subscribe(resp => {
-          if (resp) this.openStoreByStreetModal('storeByStreetId', resp);
+          if (resp) this.openModal('storeByStreetId', resp, DrugstoreDetailDialogComponent);
         });
     }
 
   }
 
-  openStoreByStreetModal(formControlName: string, payload: any) {
-    const dialogRef = this.appController.openDialog(payload, DrugstoreDetailComponent);
+  openModal(formControlName: string, payload: any, component: ComponentType<any> | TemplateRef<any>, type?: any) {
+    const dialogRef = this.appController.openDialog(payload, component);
     dialogRef.afterClosed().subscribe(dataEmitted => {
       if (dataEmitted) {
+        console.log('entrei pq sou true');
         this.form.get(formControlName)?.setValue(dataEmitted);
-        // this.ref.markForCheck();
+        if (type) {
+          if (type === 'street') this.updateStreets();
+          else if (type === 'drugstore') this.updateDrugstores();
+        }
       }
     });
   }
+
+  public updateStreets() {
+    this.store.dispatch(new StreetActions.GetUpdatedStreets())
+      .subscribe(resp => {
+        this.filteredStreets = resp?.street;
+      });
+  }
+
+  public updateDrugstores() {
+    this.store.dispatch(new DrugstoreActions.GetUpdatedStores())
+      .subscribe(resp => {
+        this.filteredDrugstores = resp?.drugstore;
+      });
+  }
+
 
 }

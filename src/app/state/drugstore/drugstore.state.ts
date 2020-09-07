@@ -61,5 +61,32 @@ export class DrugstoreState {
         }
     }
 
+    @Action(DrugstoreActions.AddDrugstore)
+    async addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
+        const data: any = await this.drugstoreService.addDrugstore(payload);
+        const state = getState();
+        if (data) {
+            setState({
+                ...state
+            });
+        }
+    }
+
+    @Action(DrugstoreActions.GetUpdatedStores)
+    async getUpdatedStores({ getState, setState }: StateContext<DrugstoreStateModel>, { }: DrugstoreActions.GetUpdatedStores) {
+        const data: any = await this.drugstoreService.getUpdatedStores();
+        if (data) {
+            setState(data);
+        }
+    }
+
+    @Action(DrugstoreActions.UpdateStoreByName)
+    async updateStoreByName({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.UpdateStoreByName) {
+        const data: any = await this.drugstoreService.getStoresByName(payload);
+        if(data) {
+            setState(data);
+        }
+    }
+
 
 }

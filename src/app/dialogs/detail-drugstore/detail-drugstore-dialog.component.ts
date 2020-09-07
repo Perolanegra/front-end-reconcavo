@@ -9,10 +9,10 @@ import { AppDefault } from 'src/app/core/app-default';
   templateUrl: './detail-drugstore-dialog.component.html',
   styleUrls: ['./detail-drugstore-dialog.component.scss'],
 })
-export class DrugstoreDetailComponent extends AppDefault implements OnInit {
+export class DrugstoreDetailDialogComponent extends AppDefault implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<DrugstoreDetailComponent>,
+    public dialogRef: MatDialogRef<DrugstoreDetailDialogComponent>,
     protected formBuilder: FormBuilder,
     public appController: AppController,
     protected dialog: MatDialog,

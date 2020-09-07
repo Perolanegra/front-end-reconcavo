@@ -347,7 +347,7 @@
                 </svg>
 
                 <img style="position: relative; left: 15px; cursor: pointer; width: 80px;" src="assets/img/search.png"
-                    alt="Lupa" />
+                     alt="Lupa" />
             </div>
 
             <div class="card highlight-card card-small">
@@ -370,7 +370,7 @@
                 <span id="pharm">
                     <input #drugstoreInput class="form-field__default" matInput autocomplete='off'
                         formControlName="drugstore" placeholder="Consulta de Farmácias" type="text"
-                        [matAutocomplete]="autoDrugstore" (keyup)="tendi()" />
+                        [matAutocomplete]="autoDrugstore" />
 
                     <mat-autocomplete autoActiveFirstOption #autoDrugstore="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event)" [panelWidth]="mobileQuery?.matches ? 'unset' : '300px'"
@@ -390,7 +390,7 @@
                 </svg>
 
                 <img class="search-icon" src="assets/img/search.png" alt="Lupa"
-                    (click)="openModal('max_results', drugstoreInput)" />
+                     />
             </div>
         </div>
 
@@ -428,7 +428,7 @@
         <p>Cadastros de:</p>
 
         <div class="card-container">
-            <div class="card card-small" tabindex="0">
+            <div class="card card-small" tabindex="0" (click)="openModal('', '', addStreetDialogComponent, 'street')">
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24">
                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
@@ -436,7 +436,7 @@
                 <span>Novo Bairro</span>
             </div>
 
-            <div class="card card-small" tabindex="0">
+            <div class="card card-small" tabindex="0" (click)="openModal('', '', addStoreDialogComponent, 'drugstore')">
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                     viewBox="0 0 24 24">
                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" /></svg>
@@ -446,21 +446,39 @@
         </div>
 
         <!-- Farmacias -->
-
         <div class="flexbox" class="terminal-out" [ngClass]="[ mobileQuery?.matches ? 'terminal-out__mobile' : '' ]">
             <div class="terminal">
                 <pre style="color: #1976d2;">Lista de Bairros Cadastrados</pre>
-                <div class="list" *ngFor="let street of filteredStreets">
-                    {{ street?.name }}
+                <div class="list align-center-store" *ngFor="let street of filteredStreets">
+                    <span style="max-width: 75%;">{{ street?.name }}</span>
+                    <div class="box-edit">
+                        <button tabindex="-1" mat-icon-button (click)="submit()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button tabindex="-1" mat-icon-button (click)="submit()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
                 </div>
+
             </div>
 
             <div class="terminal">
                 <pre style="color: #1976d2;">Lista de Farmácias Cadastradas</pre>
-                <div class="list" *ngFor="let store of filteredDrugstores">
-                    <span>{{ store?.name }}</span>
-                    <span>Fundação: {{ store?.foundationDate }}</span>
-                    <span>{{ store?.roundTheClock ? 'Funcionamento: 24 horas' : '' }}</span>
+                <div class="list align-center-store" *ngFor="let store of filteredDrugstores">
+                    <span style="max-width: 75%;">{{ store?.name }}</span>
+                    <span style="max-width: 75%;">Fundação: {{ store?.foundationDate }}</span>
+                    <span style="max-width: 75%;">{{ store?.roundTheClock ? 'Funcionamento: 24 horas' : '' }}</span>
+
+                    <div class="box-edit">
+                        <button tabindex="-1" mat-icon-button (click)="submit()">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button tabindex="-1" mat-icon-button (click)="submit()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </div>

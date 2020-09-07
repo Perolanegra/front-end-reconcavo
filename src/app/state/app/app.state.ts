@@ -11,7 +11,7 @@ export class AppStateModel {
     name: 'app',
     defaults: {
         hasMobileMatches: false,
-        routes: null
+        routes: null,
     }
 })
 

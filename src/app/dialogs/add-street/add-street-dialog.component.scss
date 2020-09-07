@@ -1,0 +1,29 @@
+.toast-out {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label-info {
+    color: white;
+}
+
+.content {
+    display: flex;
+}
+
+.font {
+    color: white;
+}
+
+.align-check {
+    text-align: center;
+}
+
+.close {
+    position: relative;
+    color: white;
+    left: 5%;
+    top: -15px;
+}

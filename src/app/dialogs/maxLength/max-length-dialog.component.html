@@ -1,12 +1,12 @@
 <div class="toast-out toast-box-btn fade-transition-out">
     <div class="content">
-        <mat-form-field class="fade-transition-in font" style="width: 100%; margin-top: 5%;">
+        <mat-form-field class="fade-transition-in font mobile" style="width: 100%;">
             <mat-label class="label-info">Informe um número máximo de registros:</mat-label>
             <input matInput class="font" autocomplete='off' [(ngModel)]="maxLength" maxlength="3" type="number"
                 required>
         </mat-form-field>
 
-        <div>
+        <div class="align-close">
             <button style="outline:none;" tabindex="-1" mat-icon-button (click)="close()">
                 <mat-icon>close</mat-icon>
             </button>

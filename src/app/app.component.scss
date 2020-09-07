@@ -51,6 +51,18 @@
     flex-direction: column;
 }
 
+.box-edit {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    position: absolute;
+    left: 75%;
+}
+
+.align-center-store {
+    justify-content: center;
+}
+
 @media only screen and (max-width: 1024px) {
     .header-flex {
         flex-direction: column;
@@ -60,4 +72,15 @@
     .align-autocomplete {
         width: unset !important;
     }
+
+    .box-edit {
+        left: 70%;
+    }
 }
+
+::ng-deep .mat-dialog-container {
+    background: #22262e !important;
+    max-width: 95%;
+    max-height: 95vh;
+  }
+  
