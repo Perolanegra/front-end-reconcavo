@@ -11,6 +11,13 @@
 
 .content {
     display: flex;
+    flex-direction: row;
+}
+
+.content-in {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3%;
 }
 
 .font {
@@ -22,8 +29,15 @@
 }
 
 .close {
+    width: fit-content;
     position: relative;
     color: white;
-    left: 5%;
     top: -15px;
+}
+
+::ng-deep .cdk-overlay-pane {
+    justify-content: center;
+}
+
+@media only screen and (max-width: 1024px) {
 }

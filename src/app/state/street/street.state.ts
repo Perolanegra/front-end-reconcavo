@@ -57,7 +57,5 @@ export class StreetState {
             setState(data);
         }
     }
-    
-
 
 }

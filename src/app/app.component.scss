@@ -63,6 +63,15 @@
     justify-content: center;
 }
 
+.half-bottom {
+    display: flex;
+    flex-direction: column;
+    z-index: 99;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
 @media only screen and (max-width: 1024px) {
     .header-flex {
         flex-direction: column;
@@ -75,6 +84,10 @@
 
     .box-edit {
         left: 70%;
+    }
+
+    .half-bottom {
+        margin-top: 15%;
     }
 }
 

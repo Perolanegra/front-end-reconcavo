@@ -22,6 +22,8 @@ export class StreetService {
   }
 
   updateStreetsByName(payload: any) {
+    console.log('payload request: ', payload);
+    
     return new Promise((resolve, reject) => {
       resolve([
         { id: 6, name: "Farol de Itapua" },
@@ -29,5 +31,9 @@ export class StreetService {
         { id: 6, name: "Amaralina" },
       ]);
     });
+  }
+
+  editById(payload: any) {
+    
   }
 }

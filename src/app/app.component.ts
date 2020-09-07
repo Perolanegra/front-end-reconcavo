@@ -3,28 +3,36 @@ import { AppController } from './core/appController';
 import { NgFormDefault } from './core/ng-form-default';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Location } from "@angular/common"
-import { MaxLengthDialogComponent } from './dialogs/maxLength/max-length-dialog.component';
+import { EditDrugstoreDialogComponent } from './dialogs/edit-drugstore/edit-drugstore-dialog.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DrugstoreActions } from './state/drugstore/drugstore.actions';
-import { Store, Select } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 import { DrugstoreDetailDialogComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
 import { AppActions } from './state/app/app.actions';
 import { AddStreetDialogComponent } from './dialogs/add-street/add-street-dialog.component';
 import { ComponentType } from '@angular/cdk/portal';
 import { StreetActions } from './state/street/street.actions';
 import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialog.component';
+import { trigger, state, style } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('hasMaxResults', [
+      state('disabled', style({ 'opacity': '0.4', 'pointer-events': 'none' })),
+      state('enabled', style({ 'opacity': '1', 'pointer-events': 'auto' })),
+    ]),
+  ]
 })
 export class AppComponent extends NgFormDefault {
   public filteredStreets: any;
   public filteredDrugstores: any;
+  public hasMaxResultState: string = 'disabled';
 
   public mobileQuery: MediaQueryList;
-  public maxLengthDialogComponent = MaxLengthDialogComponent;
+  public EditDrugstoreDialogComponent = EditDrugstoreDialogComponent;
   public addStreetDialogComponent = AddStreetDialogComponent;
   public addStoreDialogComponent = AddStoreDialogComponent;
 
@@ -51,7 +59,6 @@ export class AppComponent extends NgFormDefault {
     this.appController.handleAutoCompleteEntity(this.formControls.storeByStreet, this.formControls.storeByStreetId, this.updateStreetsByName);
   }
 
-
   setForm(): void {
     this.form.addControl('street', new FormControl(null));
     this.form.addControl('streetId', new FormControl(null));
@@ -63,32 +70,27 @@ export class AppComponent extends NgFormDefault {
     this.form.addControl('flg_round_the_clock', new FormControl(null));
   }
 
-  tendi() {
-    console.log('ok: ', this.formControls.max_results.value);
+  setMaxResultState(ev: any): void {
+    this.hasMaxResultState = ev.target.value ? 'enabled' : 'disabled';
   }
 
   private updateDrugstoreByName = (value: string) => {
-    this.store.dispatch(new DrugstoreActions.UpdateStoreByName({ name: value }))
+    const payload = { name: value, max_results: this.form.value.max_results };
+    this.store.dispatch(new DrugstoreActions.UpdateStoreByName(payload))
       .subscribe(resp => {
         this.filteredDrugstores = resp?.drugstore;
       });
   }
 
   private updateStreetsByName = (value: string) => {
-    this.store.dispatch(new StreetActions.UpdateStreetsByName({ name: value }))
+    const payload = { name: value, max_results: this.form.value.max_results };
+    this.store.dispatch(new StreetActions.UpdateStreetsByName(payload))
       .subscribe(resp => {
         this.filteredStreets = resp?.street;
       });
   }
 
-  private updateStoreByStreetId = (pValue: string) => {
-    this.filteredDrugstores = [
-      { name: 'FOdasse mudei', id: 1, idNeighborhood: { id: 1, name: "Barroquinha" }, roundTheClock: false, foundationDate: '06/09/2020' },
-    ];
-  }
-
   selected(ev: any, storeByStreet: boolean = false): void {
-    console.log('valor selecionado: ', ev.option.value);
     if (storeByStreet) {
       const { id, name } = ev.option.value;
       const submit = { id_neighborhood: id, flg_round_the_clock: name };
@@ -97,14 +99,12 @@ export class AppComponent extends NgFormDefault {
           if (resp) this.openModal('storeByStreetId', resp, DrugstoreDetailDialogComponent);
         });
     }
-
   }
 
   openModal(formControlName: string, payload: any, component: ComponentType<any> | TemplateRef<any>, type?: any) {
     const dialogRef = this.appController.openDialog(payload, component);
     dialogRef.afterClosed().subscribe(dataEmitted => {
       if (dataEmitted) {
-        console.log('entrei pq sou true');
         this.form.get(formControlName)?.setValue(dataEmitted);
         if (type) {
           if (type === 'street') this.updateStreets();
@@ -128,5 +128,11 @@ export class AppComponent extends NgFormDefault {
       });
   }
 
+  public removeDrugstoreById(payload: any): void {
+    this.store.dispatch(new DrugstoreActions.RemoveDrugstoreById({ id: payload.id }))
+      .subscribe(resp => {
+        if (resp) this.updateDrugstores();
+      });
+  }
 
 }

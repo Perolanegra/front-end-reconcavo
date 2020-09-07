@@ -16,8 +16,7 @@ export namespace StreetActions {
 
     export class UpdateStreetsByName {
         static readonly type = '[Street] UpdateStreetsByName';
-        constructor(public payload: { name: string }) { }
+        constructor(public payload: { name: string, max_results: number }) { }
     }
-    
 
 }

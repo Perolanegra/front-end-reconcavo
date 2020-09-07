@@ -1,0 +1,43 @@
+<div class="toast-out toast-box-btn fade-transition-out">
+    <div class="content">
+
+        <mat-form-field appearance="outline" class="fade-transition-in font mobile" style="width: 100%;">
+            <input matInput autocomplete='off' [value]="drugstore.idNeighborhood.name" type="text"
+                [matAutocomplete]="autoStreet" (keyup)="onStreetKeyUp($event)" />
+
+            <mat-autocomplete #autoStreet="matAutocomplete" [displayWith]="getNameItem" class="align-autocomplete"
+                (optionSelected)="selectedStreet($event)" [panelWidth]="hasMobileMatches ? 'unset' : '300px'">
+                <mat-option *ngFor="let street of filteredStreets" [value]="street">
+                    {{street?.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="fade-transition-in font mobile" style="width: 100%;">
+            <mat-label style="color: grey;">Farmácia:</mat-label>
+            <input matInput class="font" autocomplete='off' [(ngModel)]="drugstore.name" type="text" required>
+        </mat-form-field>
+
+        <mat-form-field color="accent" appearance="outline" style="width: 100%;">
+            <mat-label style="color: grey;">Fundação:</mat-label>
+            <input matInput readonly class="font" [value]="drugstore.foundationDate" (dateChange)="setDate($event)" autocomplete='off'
+                [matDatepicker]="picker2" [matDatepicker]="picker2" (click)="picker2.open()">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        </mat-form-field>
+
+        <mat-slide-toggle #toggle24hour [checked]="false" [(ngModel)]="drugstore.roundTheClock">
+            <div class="list fade-in" style="padding: 0px 15px 0px;"
+                [ngClass]="[ drugstore?.roundTheClock ? 'enabled' : 'disabled' ]">
+                Farmácias 24 horas
+            </div>
+        </mat-slide-toggle>
+
+    </div>
+
+    <div class="align-check" [ngClass]="[ data.name ? 'enabled' : 'disabled' ]">
+        <button tabindex="-1" mat-icon-button (click)="submit()">
+            <mat-icon class="align-check">checked</mat-icon>
+        </button>
+    </div>
+</div>

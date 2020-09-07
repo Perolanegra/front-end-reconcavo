@@ -10,13 +10,14 @@ import { AppController } from 'src/app/core/appController';
 import { DrugstoreActions } from 'src/app/state/drugstore/drugstore.actions';
 
 @Component({
-    selector: 'app-add-street-dialog',
+    selector: 'app-add-drugstore-dialog',
     templateUrl: './add-store-dialog.component.html',
     styleUrls: ['./add-store-dialog.component.scss'],
 })
 export class AddStoreDialogComponent extends NgFormDefault implements OnInit, OnDestroy {
     //   @Select(AppState.forgotPassResponse) fPassResponse$: Observable<any>;
     private fPassResponseSubscription$: Subscription = null as any;
+    public filteredStreets: any;
 
     constructor(
         public formBuilder: FormBuilder,
@@ -31,33 +32,40 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit, On
 
     ngOnInit(): void {
         this.setForm();
+        this.appController.handleAutoCompleteEntity(this.formControls.idNeighborhood, this.formControls.street, this.updateStreetsByName);
     }
 
     setForm() {
         this.form.addControl('name', new FormControl(null));
         this.form.addControl('roundTheClock', new FormControl(null));
+        this.form.addControl('street', new FormControl(null));
         this.form.addControl('idNeighborhood', new FormControl(null));
         this.form.addControl('foundationDate', new FormControl(null));
     }
 
     ngOnDestroy() {
-        // this.fPassResponseSubscription$ ?? this.fPassResponseSubscription$.unsubscribe();
+        this.fPassResponseSubscription$ ? this.fPassResponseSubscription$.unsubscribe() : null;
     }
 
-    getResponse() {
-        // this.fPassResponseSubscription$ = this.fPassResponse$.subscribe(async (data) => {
-        //   if (data) {
-        //     this.close();
-        //   }
-        // });
+    selected(ev: any): void {
+
+    }
+
+    private updateStreetsByName = (value: string) => {
+        const payload = { name: value, max_results: 9999999 };
+        this.store.dispatch(new StreetActions.UpdateStreetsByName(payload))
+            .subscribe(resp => {
+                this.filteredStreets = resp?.street;
+            });
     }
 
     submit(): void {
         if (this.form.valid) {
-            this.store.dispatch(new DrugstoreActions.AddDrugstore(this.form.value))
+            const { street, ...payload } = this.form.value;
+            this.fPassResponseSubscription$ = this.store.dispatch(new DrugstoreActions.AddDrugstore(payload))
                 .subscribe(resp => {
                     if (resp) {
-                        console.log('resp: ', resp);
+                        console.log('resposta: ', resp);
                         this.close(true);
                     }
                 }, (error => {

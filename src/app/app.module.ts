@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './core/material.module';
 import { AppController } from './core/appController';
-import { MaxLengthDialogComponent } from './dialogs/maxLength/max-length-dialog.component';
+import { EditDrugstoreDialogComponent } from './dialogs/edit-drugstore/edit-drugstore-dialog.component';
 import { DrugstoreDetailDialogComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { DrugstoreService } from './core/drugstore.service';
@@ -27,7 +27,7 @@ import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialo
 @NgModule({
   declarations: [
     AppComponent,
-    MaxLengthDialogComponent,
+    EditDrugstoreDialogComponent,
     DrugstoreDetailDialogComponent,
     AddStreetDialogComponent,
     AddStoreDialogComponent
@@ -51,7 +51,7 @@ import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialo
     MaterialModule,
   ],
   entryComponents: [
-    MaxLengthDialogComponent,
+    EditDrugstoreDialogComponent,
     DrugstoreDetailDialogComponent,
     AddStreetDialogComponent,
     AddStoreDialogComponent
