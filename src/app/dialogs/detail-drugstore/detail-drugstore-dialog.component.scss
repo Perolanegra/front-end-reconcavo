@@ -12,6 +12,8 @@
 ::ng-deep .mat-dialog-container {
   overflow: hidden;
   background: #22262e;
+  max-width: 95%;
+  max-height: 95vh;
 }
 
 .content {
@@ -50,11 +52,23 @@
   color: white;
   position: relative;
   top: -20px;
-  left: 3%;
+  right: 2%;
 }
 
 .font {
+  color: white;
   line-height: 25px;
+}
+
+.content-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0 15px;
+}
+
+::ng-deep .cdk-overlay-pane {
+  justify-content: center;
 }
 
 ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-underline {
@@ -75,5 +89,25 @@
 
   .toast-in-align {
     padding-left: 20px;
+  }
+
+  .close-icon {
+    position: fixed;
+    left: 78%;
+    top: 2%;
+    right: unset;
+  }
+
+  .font {
+    line-height: unset;
+  }
+
+  .content {
+    width: unset;
+  }
+
+  ::ng-deep .mat-dialog-container {
+    overflow-y: scroll;
+    width: 85vw;
   }
 }

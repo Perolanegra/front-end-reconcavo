@@ -8,13 +8,6 @@
     height: 0 !important;
 }
 
-.flexbox {
-    justify-content: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .form-field__default {
     display: flex;
     position: relative;
@@ -46,7 +39,6 @@
     left: 15px; 
     cursor: pointer; 
     width: 80px;
-    z-index: 99999;
 }
 
 .terminal-out {

@@ -8,6 +8,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { DrugstoreActions } from './state/drugstore/drugstore.actions';
 import { Store, Select } from '@ngxs/store';
 import { DrugstoreDetailComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
+import { AppActions } from './state/app/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -36,6 +37,7 @@ export class AppComponent extends NgFormDefault {
   private _mobileQueryListener: () => void;
 
   ngOnInit() {
+    this.store.dispatch(new AppActions.SetMediaScreen(this.mobileQuery.matches));
     this.setForm();
     this.appController.handleAutoCompleteEntity(this.formControls.drugstore, this.formControls.drugstoreId, this.updateDrugstoreByName);
     this.appController.handleAutoCompleteEntity(this.formControls.street, this.formControls.streetId, this.updateStreetsByName);

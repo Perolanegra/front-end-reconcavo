@@ -28,3 +28,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     transition-timing-function: 0.4s;
     transition-timing-function: ease-in;
 }
+
+.flexbox {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

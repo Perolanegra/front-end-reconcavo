@@ -2,15 +2,17 @@ import { FormGroup, FormBuilder, FormControl, AbstractControl } from "@angular/f
 import { Location } from "@angular/common"
 import { AppController } from './appController';
 import { Directive } from '@angular/core';
+import { AppDefault } from './app-default';
 
 @Directive()
-export abstract class NgFormDefault {
+export abstract class NgFormDefault extends AppDefault {
     //Forumlario que o usuário preencherá
     form: FormGroup;
 
     constructor(protected formBuilder: FormBuilder,
     protected appController: AppController,
     protected location: Location) {
+        super();
         this.form = this.formBuilder.group({});
     }
 

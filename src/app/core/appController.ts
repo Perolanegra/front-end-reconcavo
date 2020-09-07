@@ -5,7 +5,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Injectable()
-export class AppController {
+export class AppController  {
     private renderer: Renderer2;
 
     constructor(public dialog: MatDialog, private rendererFactory: RendererFactory2,) {

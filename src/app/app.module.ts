@@ -18,6 +18,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin'
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { DrugstoreState } from './state/drugstore/drugstore.state';
+import { AppState } from './state/app/app.state';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { DrugstoreState } from './state/drugstore/drugstore.state';
     MaterialModule,
     FormsModule,
     HttpClientModule,
-    NgxsModule.forRoot([DrugstoreState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([DrugstoreState, AppState], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
       // key: ['state.prop'],
     }),
