@@ -11,14 +11,14 @@ export class AppController  {
     constructor(public dialog: MatDialog, private rendererFactory: RendererFactory2,) {
         this.renderer = this.rendererFactory.createRenderer(null, null);
     }
-    /** 
+    /**
     * Autocomplete voltado para campos de objetos que repesentam entities passando id
     * @formControlEntity Field que contem instancia do objeto selected
     * @formControlIdEntity Field que contem ID da instancia do objeto selected
     * @handler Função anônima que tem responsabilidade em obter os registros de um `Autocomplete`
     * @minLength Quantidade mínima de chars digitado para efetuar a request
    */
-    public handleAutoCompleteEntity(formControlEntity: AbstractControl, formControlIdEntity: AbstractControl, handler: any, minLength: number = 4) {
+    public handleAutoCompleteEntity(formControlEntity: AbstractControl, formControlIdEntity: AbstractControl, handler: any, minLength: number = 1) {
         //Inicia o id com o id da entidade recebida.
         if (formControlEntity.value) {
             formControlIdEntity.setValue(formControlEntity.value.id);
