@@ -1,6 +1,6 @@
 export namespace DrugstoreActions {
 
-    export class GetByStreet {
+    export class GetByStreetId {
         static readonly type = '[DrugStore] GetByStreet';
         constructor(public payload: { id_neighborhood: number; flg_round_the_clock: boolean; }) { }
     }

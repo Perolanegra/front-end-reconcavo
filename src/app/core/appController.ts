@@ -59,6 +59,8 @@ export class AppController {
             data: paylaod,
             hasBackdrop: true,
             disableClose: true,
+            width: paylaod.width,
+            height: paylaod.height
         });
 
         return dialogRef;

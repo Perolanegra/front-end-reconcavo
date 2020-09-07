@@ -52,17 +52,13 @@ export class DrugstoreState {
         return state.foundationDate;
     }
 
-    @Action(DrugstoreActions.GetByStreet)
-    async signIn({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.GetByStreet) {
-
+    @Action(DrugstoreActions.GetByStreetId)
+    async getByStreetId({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.GetByStreetId) {
         const data: any = await this.drugstoreService.getStoreByStreet(payload);
 
         if (data) {
-            // const resp = await this.drugstoreService.getUserByToken(data.access_token).toPromise();
-            const state = getState();
             setState({
-                ...state,
-                // resp
+                ...data
             });
         }
     }

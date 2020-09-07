@@ -5,6 +5,9 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { Location } from "@angular/common"
 import { MaxLengthDialogComponent } from './dialogs/maxLength/max-length-dialog.component';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { DrugstoreActions } from './state/drugstore/drugstore.actions';
+import { Store, Select } from '@ngxs/store';
+import { DrugstoreDetailComponent } from './dialogs/detail-drugstore/detail-drugstore-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +22,7 @@ export class AppComponent extends NgFormDefault {
 
   constructor(protected appController: AppController,
     protected formBuilder: FormBuilder,
+    private store: Store,
     changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher,
     protected location: Location) {
@@ -102,20 +106,25 @@ export class AppComponent extends NgFormDefault {
     ];
   }
 
-  selected(event: any, storeByStreet: boolean = false): void {
-    // this.appController.openDialog();
+  selected(ev: any, storeByStreet: boolean = false): void {
+    console.log('valor selecionado: ', ev.option.value);
     if(storeByStreet) {
-      event.option.value
-      // fazer a request enviando o id do bairro  e flg_round_the_clock
-      this.openStoreByStreetModal('storeByStreetId');
+      const { id, name } = ev.option.value;
+      const submit = { id_neighborhood: id, flg_round_the_clock: name };
+      this.store.dispatch(new DrugstoreActions.GetByStreetId(submit))
+      .subscribe(resp => {
+        if(resp) {
+          // const payload = { ...resp, width: '', height: '50%' };
+          // console.log('resp: ', payload);
+          this.openStoreByStreetModal('storeByStreetId', resp);
+        }
+      });
     }
-    console.log('valor selecionado: ', event.option.value);
-    // (click)="openStoreByStreetModal('max')"
     
   }
 
-  openStoreByStreetModal(formControlName: string) {
-    const dialogRef = this.appController.openDialog(null, MaxLengthDialogComponent);
+  openStoreByStreetModal(formControlName: string, payload: any) {
+    const dialogRef = this.appController.openDialog(payload, DrugstoreDetailComponent);
     dialogRef.afterClosed().subscribe(dataEmitted => {
       if (dataEmitted) {
         this.form.get(formControlName)?.setValue(dataEmitted);

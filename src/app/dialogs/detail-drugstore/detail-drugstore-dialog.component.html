@@ -1,0 +1,30 @@
+<div class="fade-transition-out" style="display: flex;">
+
+    <div class="content" style="flex-direction: column;">
+        <mat-form-field class="fade-transition-in font" style="width: 100%;">
+            <mat-label class="label-info">Farmácia:</mat-label>
+            <input matInput readonly class="font" autocomplete='off' [(ngModel)]="name" maxlength="3" type="text"
+                required>
+        </mat-form-field>
+
+        <mat-form-field class="fade-transition-in font" style="width: 100%;">
+            <mat-label class="label-info">Fundação:</mat-label>
+            <input matInput readonly class="font" autocomplete='off' [(ngModel)]="foundationDate" maxlength="3" type="text"
+                required>
+        </mat-form-field>
+
+
+        <mat-form-field class="fade-transition-in font" style="width: 100%;">
+            <mat-label class="label-info">Estabelcimento</mat-label>
+            <input matInput readonly class="font" autocomplete='off' [value]="flg_round_the_clock ? '24 horas' : 'Não atende 24 horas'" type="text"
+                required>
+        </mat-form-field>
+    </div>
+
+
+    <div>
+        <button style="outline:none;" tabindex="-1" mat-icon-button (click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
