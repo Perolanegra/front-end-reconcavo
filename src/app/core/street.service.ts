@@ -14,19 +14,28 @@ export class StreetService {
 
   public addStreetByName(payload: any): Promise<any | undefined> {
     this.url = `${environment.server}/${this.base_url}`;
-    return this.httpClient.post(this.url, payload, {}).toPromise()
-      .catch(err => alert(err.error.detail));
+    return new Promise((resolve, reject) => {
+
+    });
+    // return this.httpClient.post(this.url, payload, {}).toPromise()
+    //   .catch(err => alert(err.error.detail));
   }
 
   getUpdatedStreets(): Promise<any | undefined> { // return all
     this.url = `${environment.server}/${this.base_url}`;
-    return this.httpClient.get(this.url, {}).toPromise()
-      .catch(err => alert(err.error.detail));
+    return new Promise((resolve, reject) => {
+
+    });
+    // return this.httpClient.get(this.url, {}).toPromise()
+    //   .catch(err => alert(err.error.detail));
   }
 
   updateStreetsByName(payload: any) {
     this.url = `${environment.server}/${this.base_url}/name`;
-    return this.httpClient.get(this.url, payload).toPromise()
-      .catch(err => alert(err.error.detail));
+    return new Promise((resolve, reject) => {
+
+    });
+    // return this.httpClient.get(this.url, payload).toPromise()
+    //   .catch(err => alert(err.error.detail));
   }
 }

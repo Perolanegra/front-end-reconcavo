@@ -12,6 +12,11 @@ export namespace DrugstoreActions {
         constructor(public payload: DrugstoreStateModel) { }
     }
 
+    export class SetLocalState {
+        static readonly type = '[Drugstore] SetLocalState';
+        constructor(public payload: DrugstoreStateModel) { }
+    }
+
     export class GetUpdatedStores {
         static readonly type = '[Drugstore] getUpdatedStores';
     }

@@ -94,6 +94,7 @@ export class DrugstoreState {
     @Action(DrugstoreActions.UpdateStoreByName)
     async updateStoreByName({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.UpdateStoreByName) {
         const data: any = await this.drugstoreService.getStoresByName(payload);
+        
         if(data) {
             setState(data);
         }
@@ -109,6 +110,12 @@ export class DrugstoreState {
             });
         }
     }
+
+    @Action(DrugstoreActions.SetLocalState)
+    setLocalState({ setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.SetLocalState) {
+        setState(payload);
+    }
+
 
 
 }

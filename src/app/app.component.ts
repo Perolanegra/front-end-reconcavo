@@ -57,6 +57,10 @@ export class AppComponent extends NgFormDefault {
     this.appController.handleAutoCompleteEntity(this.formControls.drugstore, this.formControls.drugstoreId, this.updateDrugstoreByName);
     this.appController.handleAutoCompleteEntity(this.formControls.street, this.formControls.streetId, this.updateStreetsByName);
     this.appController.handleAutoCompleteEntity(this.formControls.storeByStreet, this.formControls.storeByStreetId, this.updateStreetsByName);
+    this.addDrugstore(
+      { name: 'A Fórmula', id: 1, idNeighborhood: { id: 1, name: "COCO" }, roundTheClock: true, foundationDate: '07/09/2020' },
+      { name: 'Drogaria SP', id: 2, idNeighborhood: { id: 2, name: "TESTE" }, roundTheClock: false, foundationDate: '07/09/2020' }
+    );
   }
 
   setForm(): void {
@@ -70,6 +74,10 @@ export class AppComponent extends NgFormDefault {
     this.form.addControl('flg_round_the_clock', new FormControl(null));
   }
 
+  addDrugstore(...params: any) {
+    this.store.dispatch(new DrugstoreActions.AddDrugstore(params));
+  }
+
   setMaxResultState(ev: any): void {
     this.hasMaxResultState = ev.target.value ? 'enabled' : 'disabled';
   }
@@ -79,6 +87,7 @@ export class AppComponent extends NgFormDefault {
     this.store.dispatch(new DrugstoreActions.UpdateStoreByName(payload))
       .subscribe(resp => {
         this.filteredDrugstores = resp?.drugstore;
+        console.log('ok: ', this.filteredDrugstores);
       });
   }
 
