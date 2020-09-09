@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Location } from "@angular/common";
@@ -30,7 +29,11 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
 
     ngOnInit(): void {
         this.setForm();
-        this.appController.handleAutoCompleteEntity(this.formControls.idNeighborhood, this.formControls.street, this.updateStreetsByName);
+        this.appController.handleAutoCompleteEntity(
+            this.formControls.idNeighborhood,
+            this.formControls.street,
+            this.getStreetsByName
+        );
     }
 
     setForm() {
@@ -45,9 +48,9 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
 
     }
 
-    private updateStreetsByName = (value: string) => {
+    private getStreetsByName = (value: string) => {
         const payload = { name: value, max_results: 9999999 };
-        this.store.dispatch(new StreetActions.UpdateStreetsByName(payload))
+        this.store.dispatch(new StreetActions.GetStreetsByName(payload))
             .subscribe(resp => {
                 this.filteredStreets = resp?.street;
             });

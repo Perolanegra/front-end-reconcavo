@@ -67,8 +67,9 @@ export class DrugstoreState {
     }
 
     @Action(DrugstoreActions.AddDrugstore)
-    addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
-        this.drugstoreService.addDrugstore(payload);
+    async addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
+        const data = await this.drugstoreService.addDrugstore(payload);
+        if (data) setState(data);
     }
 
     @Action(DrugstoreActions.EditDrugstore)
@@ -93,8 +94,8 @@ export class DrugstoreState {
     @Action(DrugstoreActions.UpdateStoreByName)
     async updateStoreByName({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.UpdateStoreByName) {
         const data: any = await this.drugstoreService.getStoresByName(payload);
-        
-        if(data) {
+
+        if (data) {
             setState(data);
         }
     }
@@ -103,7 +104,7 @@ export class DrugstoreState {
     async removeDrugstoreById({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.RemoveDrugstoreById) {
         const data: any = await this.drugstoreService.removeDrugstoreById(payload);
         const state = getState();
-        if(data) {
+        if (data) {
             setState({
                 ...state
             });

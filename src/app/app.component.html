@@ -329,7 +329,7 @@
 
                 <span id="street">
                     <input #streetInput class="form-field__default" matInput autocomplete='off' formControlName="street"
-                        placeholder="Consulta de Bairros" type="text" [matAutocomplete]="autoStreet" />
+                        placeholder="Consulta de Bairros" type="text" [matAutocomplete]="autoStreet"/>
 
                     <mat-autocomplete autoActiveFirstOption #autoStreet="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event)" [panelWidth]="mobileQuery?.matches ? 'unset' : '300px'"

@@ -14,8 +14,8 @@ export namespace StreetActions {
         static readonly type = '[Street] GetUpdatedStreets';
     }
 
-    export class UpdateStreetsByName {
-        static readonly type = '[Street] UpdateStreetsByName';
+    export class GetStreetsByName {
+        static readonly type = '[Street] GetStreetsByName';
         constructor(public payload: { name: string, max_results: number }) { }
     }
 

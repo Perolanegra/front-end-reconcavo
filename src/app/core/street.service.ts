@@ -12,21 +12,31 @@ export class StreetService {
 
   constructor(private store: Store) { }
 
-  public addStreet(payload: any): void {
-    this.store.dispatch(new DBActions.GetStreets())
-      .subscribe((state: any) => { // 
-        let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
-        payload.id = ref.length ? ref.length + 1 : 1;
-        ref = [payload, ...ref];
-        this.store.dispatch(new DBActions.AddStreets(ref));
-      });
+  public addStreet(payload: any): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetStreets())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          payload.id = ref.length ? ref.length + 1 : 1;
+          ref = [payload, ...ref];
+          this.store.dispatch(new DBActions.AddStreets(ref));
+          resolve(ref);
+        });
+    });
   }
 
   getUpdatedStreets(): void { // return all
 
   }
 
-  updateStreetsByName(payload: any) {
-
+  getStreetsByName(payload: any): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetStreets())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          const filtered = ref.map(street => street.name.includes(payload.name) ? street : null);
+          resolve(filtered[0] ? filtered : []);
+        });
+    });
   }
 }

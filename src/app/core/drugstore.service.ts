@@ -49,24 +49,26 @@ export class DrugstoreService extends AppDefault {
 
   getStoresByName(payload: any): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
-      const observable = this.store.select(state => state.drugstore);
-      observable.subscribe(item => {
-        const all = item.map((store: any) => {
-          if (store?.name.includes(payload.name)) return store;
+      this.store.dispatch(new DBActions.GetDrugstores())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          const filtered = ref.map(street => street.name.includes(payload.name) ? street : null);
+          resolve(filtered[0] ? filtered : []);
         });
-        resolve(all);
-      })
     });
   }
 
-  public addDrugstore(payload: any): void {
-    this.store.dispatch(new DBActions.GetDrugstores())
-      .subscribe((state: any) => {
-        let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
-        payload.id = ref.length ? ref.length + 1 : 1;
-        ref = [payload, ...ref];
-        this.store.dispatch(new DBActions.AddDrugstores(ref));
-      });
+  public addDrugstore(payload: any): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetDrugstores())
+        .subscribe((state: any) => {
+          let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          payload.id = ref.length ? ref.length + 1 : 1;
+          ref = [payload, ...ref];
+          this.store.dispatch(new DBActions.AddDrugstores(ref));
+          resolve(ref);
+        });
+    });
   }
 
 }

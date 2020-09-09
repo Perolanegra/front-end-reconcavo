@@ -32,24 +32,21 @@ export class StreetState {
     }
 
     @Action(StreetActions.AddStreet)
-    addStreetByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.AddStreet) {
-        this.streetService.addStreet(payload);
+    async addStreetByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.AddStreet) {
+        const data = await this.streetService.addStreet(payload);
+        if (data) setState(data);
     }
 
     @Action(StreetActions.GetUpdatedStreets)
-    async getUpdatedStreets({ getState, setState }: StateContext<StreetStateModel>, {}: StreetActions.GetUpdatedStreets) {
+    async getUpdatedStreets({ getState, setState }: StateContext<StreetStateModel>, { }: StreetActions.GetUpdatedStreets) {
         const data: any = await this.streetService.getUpdatedStreets();
-        if(data) {
-            setState(data);
-        }
+        if (data) setState(data);
     }
 
-    @Action(StreetActions.UpdateStreetsByName)
-    async updateStreetsByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.UpdateStreetsByName) {
-        const data: any = await this.streetService.updateStreetsByName(payload);
-        if(data) {
-            setState(data);
-        }
+    @Action(StreetActions.GetStreetsByName)
+    async GetStreetsByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.GetStreetsByName) {
+        const data: any = await this.streetService.getStreetsByName(payload);
+        if (data) setState(data);
     }
 
 }

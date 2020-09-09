@@ -53,7 +53,7 @@ export class AppComponent extends NgFormDefault {
 
   private _mobileQueryListener: () => void;
 
-  ngOnInit() {
+  ngOnInit() { //terminei o add, agr fazer o get drugstore e streets
     this.store.dispatch(new AppActions.SetMediaScreen(this.mobileQuery.matches));
     this.setForm();
     this.appController.handleAutoCompleteEntity(
@@ -64,12 +64,12 @@ export class AppComponent extends NgFormDefault {
     this.appController.handleAutoCompleteEntity(
       this.formControls.street,
       this.formControls.streetId,
-      this.updateStreetsByName
+      this.getStreetsByName
     );
     this.appController.handleAutoCompleteEntity(
       this.formControls.storeByStreet,
       this.formControls.storeByStreetId,
-      this.updateStreetsByName
+      this.getStreetsByName
     );
     // this.addStreet(
     //   { name: 'Centro - Nazaré' },
@@ -115,10 +115,10 @@ export class AppComponent extends NgFormDefault {
       });
   }
 
-  private updateStreetsByName = (value: string) => {
+  private getStreetsByName = (value: string) => {
     const payload = { name: value, max_results: this.form.value.max_results };
     this.store
-      .dispatch(new StreetActions.UpdateStreetsByName(payload))
+      .dispatch(new StreetActions.GetStreetsByName(payload))
       .subscribe((resp) => {
         // this.filteredStreets = resp?.street;
       });

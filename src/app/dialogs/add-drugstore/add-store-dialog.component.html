@@ -13,12 +13,11 @@
 
                     <mat-autocomplete #autoStreet="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event)" [panelWidth]="hasMobileMatches ? 'unset' : '300px'"
-                        class="align-autocomplete">
+                        class="align-autocomplete" [showPanel]="filteredStreets?.length">
                         <mat-option *ngFor="let street of filteredStreets" [value]="street">
                             {{street?.name}}
                         </mat-option>
                     </mat-autocomplete>
-
                 </mat-form-field>
 
                 <mat-form-field class="fade-transition-in font" style="width: 100%;">
@@ -28,7 +27,8 @@
 
                 <mat-form-field class="fade-transition-in font" style="width: 100%;">
                     <mat-label class="label-info">Data Fundação:</mat-label>
-                    <input matInput class="font" autocomplete='off' formControlName="foundationDate" type="text" required>
+                    <input matInput class="font" autocomplete='off' formControlName="foundationDate" type="text"
+                        required>
                 </mat-form-field>
 
                 <div>
