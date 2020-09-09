@@ -22,6 +22,7 @@ import { AppState } from './state/app/app.state';
 import { AddStreetDialogComponent } from './dialogs/add-street/add-street-dialog.component';
 import { StreetService } from './core/street.service';
 import { StreetState } from './state/street/street.state';
+import { DBState } from './state/database/db.state';
 import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialog.component';
 
 @NgModule({
@@ -40,7 +41,7 @@ import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialo
     MaterialModule,
     FormsModule,
     HttpClientModule,
-    NgxsModule.forRoot([DrugstoreState, AppState, StreetState], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([DrugstoreState, AppState, StreetState, DBState], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
       // key: ['state.prop'],
     }),

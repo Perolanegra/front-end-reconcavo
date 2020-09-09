@@ -31,15 +31,9 @@ export class StreetState {
         return state.id;
     }
 
-    @Action(StreetActions.AddStreetByName)
-    async addStreetByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.AddStreetByName) {
-        const data: any = await this.streetService.addStreetByName(payload);
-        const state = getState();
-        if (data) {
-            setState({
-                ...state
-            });
-        }
+    @Action(StreetActions.AddStreet)
+    async addStreetByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.AddStreet) {
+        await this.streetService.addStreet(payload);
     }
 
     @Action(StreetActions.GetUpdatedStreets)

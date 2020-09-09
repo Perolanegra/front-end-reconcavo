@@ -57,10 +57,13 @@ export class AppComponent extends NgFormDefault {
     this.appController.handleAutoCompleteEntity(this.formControls.drugstore, this.formControls.drugstoreId, this.updateDrugstoreByName);
     this.appController.handleAutoCompleteEntity(this.formControls.street, this.formControls.streetId, this.updateStreetsByName);
     this.appController.handleAutoCompleteEntity(this.formControls.storeByStreet, this.formControls.storeByStreetId, this.updateStreetsByName);
-    this.addDrugstore(
+    // this.addStreet(
+    //   { name: 'Centro - Nazaré' },
+    // );
+
+    this.addDrug(
       { name: 'A Fórmula', id: 1, idNeighborhood: { id: 1, name: "COCO" }, roundTheClock: true, foundationDate: '07/09/2020' },
-      { name: 'Drogaria SP', id: 2, idNeighborhood: { id: 2, name: "TESTE" }, roundTheClock: false, foundationDate: '07/09/2020' }
-    );
+    ) // continuar isso pra street e tirar depois as atribuicoes pro state drugstore q eu setei pra por direto no dbState
   }
 
   setForm(): void {
@@ -74,7 +77,11 @@ export class AppComponent extends NgFormDefault {
     this.form.addControl('flg_round_the_clock', new FormControl(null));
   }
 
-  addDrugstore(...params: any) {
+  addStreet(params: any) {
+    this.store.dispatch(new StreetActions.AddStreet(params));
+  }
+
+  addDrug(params: any) {
     this.store.dispatch(new DrugstoreActions.AddDrugstore(params));
   }
 

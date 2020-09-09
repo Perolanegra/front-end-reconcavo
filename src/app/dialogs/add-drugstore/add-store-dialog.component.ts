@@ -14,9 +14,7 @@ import { DrugstoreActions } from 'src/app/state/drugstore/drugstore.actions';
     templateUrl: './add-store-dialog.component.html',
     styleUrls: ['./add-store-dialog.component.scss'],
 })
-export class AddStoreDialogComponent extends NgFormDefault implements OnInit, OnDestroy {
-    //   @Select(AppState.forgotPassResponse) fPassResponse$: Observable<any>;
-    private fPassResponseSubscription$: Subscription = null as any;
+export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
     public filteredStreets: any;
 
     constructor(
@@ -43,10 +41,6 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit, On
         this.form.addControl('foundationDate', new FormControl(null));
     }
 
-    ngOnDestroy() {
-        this.fPassResponseSubscription$ ? this.fPassResponseSubscription$.unsubscribe() : null;
-    }
-
     selected(ev: any): void {
 
     }
@@ -62,15 +56,8 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit, On
     submit(): void {
         if (this.form.valid) {
             const { street, ...payload } = this.form.value;
-            this.fPassResponseSubscription$ = this.store.dispatch(new DrugstoreActions.AddDrugstore(payload))
-                .subscribe(resp => {
-                    if (resp) {
-                        console.log('resposta: ', resp);
-                        this.close(true);
-                    }
-                }, (error => {
-                    this.appController.tratarErro(error);
-                }));
+            this.store.dispatch(new DrugstoreActions.AddDrugstore(payload));
+            this.close(true);
         }
     }
 

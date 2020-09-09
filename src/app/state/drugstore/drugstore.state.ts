@@ -28,6 +28,11 @@ export class DrugstoreState {
     constructor(private drugstoreService: DrugstoreService) { }
 
     @Selector()
+    static getEntity(state: DrugstoreStateModel) {
+        return state;
+    }
+
+    @Selector()
     static getName(state: DrugstoreStateModel) {
         return state.name;
     }
@@ -63,13 +68,7 @@ export class DrugstoreState {
 
     @Action(DrugstoreActions.AddDrugstore)
     async addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
-        const data: any = await this.drugstoreService.addDrugstore(payload);
-        const state = getState();
-        if (data) {
-            setState({
-                ...state
-            });
-        }
+        await this.drugstoreService.addDrugstore(payload);
     }
 
     @Action(DrugstoreActions.EditDrugstore)
@@ -110,12 +109,5 @@ export class DrugstoreState {
             });
         }
     }
-
-    @Action(DrugstoreActions.SetLocalState)
-    setLocalState({ setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.SetLocalState) {
-        setState(payload);
-    }
-
-
 
 }

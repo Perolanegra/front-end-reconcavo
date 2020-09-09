@@ -53,7 +53,7 @@ export class AddStreetDialogComponent extends NgFormDefault implements OnInit, O
   submit(): void {
     if (this.form.valid) {
       const name = this.streetName;
-      this.store.dispatch(new StreetActions.AddStreetByName({ name }))
+      this.store.dispatch(new StreetActions.AddStreet({ name }))
         .subscribe(resp => {
           if (resp) this.close(true);
         }, (error => {

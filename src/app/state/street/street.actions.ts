@@ -1,7 +1,7 @@
 export namespace StreetActions {
 
-    export class AddStreetByName {
-        static readonly type = '[Street] AddStreetByName';
+    export class AddStreet {
+        static readonly type = '[Street] AddStreet';
         constructor(public payload: { name: string }) { }
     }
 
