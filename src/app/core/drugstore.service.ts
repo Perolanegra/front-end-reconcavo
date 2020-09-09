@@ -59,21 +59,14 @@ export class DrugstoreService extends AppDefault {
     });
   }
 
-  public addDrugstore(payload: any): Promise<any | undefined> {
-    return new Promise((resolve, reject) => {
-      this.store.dispatch(new DBActions.GetDrugstores())
-        .subscribe((state: any) => {
-          let ref = state.db.drugstores as Array<any>
-          if(ref) {
-            payload.id = ref.length + 1;
-            ref.push(payload);
-          } else ref = [payload];
-          this.store.dispatch(new DBActions.AddDrugstores(ref));
-        }).unsubscribe();
-    });
-    // this.url = `${environment.server}/${this.base_url}`;
-    // return this.httpClient.post(this.url, payload, {}).toPromise()
-    //   .catch(err => alert(err.error.detail));
+  public addDrugstore(payload: any): void {
+    this.store.dispatch(new DBActions.GetDrugstores())
+      .subscribe((state: any) => {
+        let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+        payload.id = ref.length ? ref.length + 1 : 1;
+        ref = [payload, ...ref];
+        this.store.dispatch(new DBActions.AddDrugstores(ref));
+      });
   }
 
 }

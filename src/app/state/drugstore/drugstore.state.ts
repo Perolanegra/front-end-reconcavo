@@ -67,8 +67,8 @@ export class DrugstoreState {
     }
 
     @Action(DrugstoreActions.AddDrugstore)
-    async addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
-        await this.drugstoreService.addDrugstore(payload);
+    addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
+        this.drugstoreService.addDrugstore(payload);
     }
 
     @Action(DrugstoreActions.EditDrugstore)

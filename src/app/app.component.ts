@@ -75,13 +75,12 @@ export class AppComponent extends NgFormDefault {
     //   { name: 'Centro - Nazaré' },
     // );
 
-    this.addDrug({
-      name: 'A Fórmula',
-      id: 1,
-      idNeighborhood: { id: 1, name: 'COCO' },
-      roundTheClock: true,
-      foundationDate: '07/09/2020',
-    }); // continuar isso pra street e tirar depois as atribuicoes pro state drugstore q eu setei pra por direto no dbState
+    // this.addDrug({
+    //   name: 'A Fórmula',
+    //   idNeighborhood: { id: 1, name: 'COCO' },
+    //   roundTheClock: true,
+    //   foundationDate: '07/09/2020',
+    // });
   }
 
   setForm(): void {
@@ -112,7 +111,7 @@ export class AppComponent extends NgFormDefault {
     this.store
       .dispatch(new DrugstoreActions.UpdateStoreByName(payload))
       .subscribe((resp) => {
-        this.filteredDrugstores = resp?.drugstore;
+        // this.filteredDrugstores = resp?.drugstore;
       });
   }
 
@@ -121,7 +120,7 @@ export class AppComponent extends NgFormDefault {
     this.store
       .dispatch(new StreetActions.UpdateStreetsByName(payload))
       .subscribe((resp) => {
-        this.filteredStreets = resp?.street;
+        // this.filteredStreets = resp?.street;
       });
   }
 
@@ -159,14 +158,14 @@ export class AppComponent extends NgFormDefault {
   public updateStreets() {
     this.store.dispatch(new StreetActions.GetUpdatedStreets())
       .subscribe((resp) => {
-        this.filteredStreets = resp?.street;
+        // this.filteredStreets = resp?.street;
       });
   }
 
   public updateDrugstores() {
     this.store.dispatch(new DrugstoreActions.GetUpdatedStores())
       .subscribe((resp) => {
-        this.filteredDrugstores = resp?.drugstore;
+        // this.filteredDrugstores = resp?.drugstore;
       });
   }
 

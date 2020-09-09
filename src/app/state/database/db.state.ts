@@ -23,6 +23,21 @@ export class DBState {
         return state.streets;
     }
 
+    @Action(DBActions.GetDrugstores)
+    async getDrugstores({ getState, setState }: StateContext<any>, { }: DBActions.GetDrugstores) {
+        const state = getState();
+        setState({
+            ...state,
+        });
+    }
+
+    @Action(DBActions.GetStreets)
+    async getStreets({ getState, setState }: StateContext<any>, { }: DBActions.GetStreets) {
+        const state = getState();
+        setState({
+            ...state,
+        });
+    }
 
     @Action(DBActions.AddDrugstores)
     async addDrugstores({ getState, setState }: StateContext<any>, { payload }: DBActions.AddDrugstores) {

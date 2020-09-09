@@ -32,8 +32,8 @@ export class StreetState {
     }
 
     @Action(StreetActions.AddStreet)
-    async addStreetByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.AddStreet) {
-        await this.streetService.addStreet(payload);
+    addStreetByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.AddStreet) {
+        this.streetService.addStreet(payload);
     }
 
     @Action(StreetActions.GetUpdatedStreets)
