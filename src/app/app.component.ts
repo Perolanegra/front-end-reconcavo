@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { AppController } from './core/appController';
 import { NgFormDefault } from './core/ng-form-default';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { Location } from "@angular/common"
+import { Location } from '@angular/common';
 import { EditDrugstoreDialogComponent } from './dialogs/edit-drugstore/edit-drugstore-dialog.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DrugstoreActions } from './state/drugstore/drugstore.actions';
@@ -21,27 +21,29 @@ import { trigger, state, style } from '@angular/animations';
   styleUrls: ['./app.component.scss'],
   animations: [
     trigger('hasMaxResults', [
-      state('disabled', style({ 'opacity': '0.4', 'pointer-events': 'none' })),
-      state('enabled', style({ 'opacity': '1', 'pointer-events': 'auto' })),
+      state('disabled', style({ opacity: '0.4', 'pointer-events': 'none' })),
+      state('enabled', style({ opacity: '1', 'pointer-events': 'auto' })),
     ]),
-  ]
+  ],
 })
 export class AppComponent extends NgFormDefault {
   public filteredStreets: any;
   public filteredDrugstores: any;
-  public hasMaxResultState: string = 'disabled';
+  public hasMaxResultState = 'disabled';
 
   public mobileQuery: MediaQueryList;
   public EditDrugstoreDialogComponent = EditDrugstoreDialogComponent;
   public addStreetDialogComponent = AddStreetDialogComponent;
   public addStoreDialogComponent = AddStoreDialogComponent;
 
-  constructor(protected appController: AppController,
+  constructor(
+    protected appController: AppController,
     protected formBuilder: FormBuilder,
     private store: Store,
     changeDetectorRef: ChangeDetectorRef,
     public media: MediaMatcher,
-    protected location: Location) {
+    protected location: Location
+  ) {
     super(formBuilder, appController, location);
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -54,16 +56,32 @@ export class AppComponent extends NgFormDefault {
   ngOnInit() {
     this.store.dispatch(new AppActions.SetMediaScreen(this.mobileQuery.matches));
     this.setForm();
-    this.appController.handleAutoCompleteEntity(this.formControls.drugstore, this.formControls.drugstoreId, this.updateDrugstoreByName);
-    this.appController.handleAutoCompleteEntity(this.formControls.street, this.formControls.streetId, this.updateStreetsByName);
-    this.appController.handleAutoCompleteEntity(this.formControls.storeByStreet, this.formControls.storeByStreetId, this.updateStreetsByName);
+    this.appController.handleAutoCompleteEntity(
+      this.formControls.drugstore,
+      this.formControls.drugstoreId,
+      this.updateDrugstoreByName
+    );
+    this.appController.handleAutoCompleteEntity(
+      this.formControls.street,
+      this.formControls.streetId,
+      this.updateStreetsByName
+    );
+    this.appController.handleAutoCompleteEntity(
+      this.formControls.storeByStreet,
+      this.formControls.storeByStreetId,
+      this.updateStreetsByName
+    );
     // this.addStreet(
     //   { name: 'Centro - Nazaré' },
     // );
 
-    this.addDrug(
-      { name: 'A Fórmula', id: 1, idNeighborhood: { id: 1, name: "COCO" }, roundTheClock: true, foundationDate: '07/09/2020' },
-    ) // continuar isso pra street e tirar depois as atribuicoes pro state drugstore q eu setei pra por direto no dbState
+    this.addDrug({
+      name: 'A Fórmula',
+      id: 1,
+      idNeighborhood: { id: 1, name: 'COCO' },
+      roundTheClock: true,
+      foundationDate: '07/09/2020',
+    }); // continuar isso pra street e tirar depois as atribuicoes pro state drugstore q eu setei pra por direto no dbState
   }
 
   setForm(): void {
@@ -91,17 +109,18 @@ export class AppComponent extends NgFormDefault {
 
   private updateDrugstoreByName = (value: string) => {
     const payload = { name: value, max_results: this.form.value.max_results };
-    this.store.dispatch(new DrugstoreActions.UpdateStoreByName(payload))
-      .subscribe(resp => {
+    this.store
+      .dispatch(new DrugstoreActions.UpdateStoreByName(payload))
+      .subscribe((resp) => {
         this.filteredDrugstores = resp?.drugstore;
-        console.log('ok: ', this.filteredDrugstores);
       });
   }
 
   private updateStreetsByName = (value: string) => {
     const payload = { name: value, max_results: this.form.value.max_results };
-    this.store.dispatch(new StreetActions.UpdateStreetsByName(payload))
-      .subscribe(resp => {
+    this.store
+      .dispatch(new StreetActions.UpdateStreetsByName(payload))
+      .subscribe((resp) => {
         this.filteredStreets = resp?.street;
       });
   }
@@ -110,21 +129,28 @@ export class AppComponent extends NgFormDefault {
     if (storeByStreet) {
       const { id, name } = ev.option.value;
       const submit = { id_neighborhood: id, flg_round_the_clock: name };
-      this.store.dispatch(new DrugstoreActions.GetByStreetId(submit))
-        .subscribe(resp => {
-          if (resp) this.openModal('storeByStreetId', resp, DrugstoreDetailDialogComponent);
+      this.store
+        .dispatch(new DrugstoreActions.GetByStreetId(submit))
+        .subscribe((resp) => {
+          if (resp) {
+            this.openModal('storeByStreetId', resp, DrugstoreDetailDialogComponent);
+          }
         });
     }
   }
 
-  openModal(formControlName: string, payload: any, component: ComponentType<any> | TemplateRef<any>, type?: any) {
+  openModal(formControlName: string, payload: any,
+    component: ComponentType<any> | TemplateRef<any>, type?: any) {
     const dialogRef = this.appController.openDialog(payload, component);
-    dialogRef.afterClosed().subscribe(dataEmitted => {
+    dialogRef.afterClosed().subscribe((dataEmitted) => {
       if (dataEmitted) {
         this.form.get(formControlName)?.setValue(dataEmitted);
         if (type) {
-          if (type === 'street') this.updateStreets();
-          else if (type === 'drugstore') this.updateDrugstores();
+          if (type === 'street') {
+            this.updateStreets();
+          } else if (type === 'drugstore') {
+            this.updateDrugstores();
+          }
         }
       }
     });
@@ -132,23 +158,24 @@ export class AppComponent extends NgFormDefault {
 
   public updateStreets() {
     this.store.dispatch(new StreetActions.GetUpdatedStreets())
-      .subscribe(resp => {
+      .subscribe((resp) => {
         this.filteredStreets = resp?.street;
       });
   }
 
   public updateDrugstores() {
     this.store.dispatch(new DrugstoreActions.GetUpdatedStores())
-      .subscribe(resp => {
+      .subscribe((resp) => {
         this.filteredDrugstores = resp?.drugstore;
       });
   }
 
   public removeDrugstoreById(payload: any): void {
     this.store.dispatch(new DrugstoreActions.RemoveDrugstoreById({ id: payload.id }))
-      .subscribe(resp => {
-        if (resp) this.updateDrugstores();
+      .subscribe((resp) => {
+        if (resp) {
+          this.updateDrugstores();
+        }
       });
   }
-
 }

@@ -1,11 +1,7 @@
 {
   "extends": "tslint:recommended",
   "rules": {
-    "align": {
-      "options": [
-        "parameters",
-        "statements"
-      ]
+    
     },
     "array-type": false,
     "arrow-return-shorthand": true,
