@@ -9,6 +9,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppDefault } from 'src/app/core/app-default';
 import { StreetActions } from 'src/app/state/street/street.actions';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-edit-drugstore-dialog',
@@ -17,7 +18,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
 
-  private fPassResponseSubscription$: Subscription = null as any;
+  private storeSubscription$: Subscription = null as any;
   public drugstore: any;
   public filteredStreets: any;
 
@@ -27,20 +28,27 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
     public appController: AppController,
     protected dialog: MatDialog,
     private store: Store,
+    private dateAdapter: DateAdapter<any>,
     protected renderer: Renderer2,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     super();
   }
 
   ngOnInit(): void {
+    this.setComponentState();
+  }
+
+  private setComponentState(): void {
+    this.dateAdapter.setLocale('pt-BR');
     this.drugstore = Object.assign({}, this.data);
     this.drugstore.idNeighborhood = Object.assign({}, this.data.idNeighborhood);
-    this.drugstore.foundationDate = new Date(this.drugstore.foundationDate);
+    const parts = this.drugstore.foundationDate.split("/");
+    this.drugstore.foundationDate = new Date(parts[2], parts[1] - 1, parts[0]);
   }
 
   private updateStreetsByName = (value: string) => {
     const payload = { name: value, max_results: 9999 };
-    this.store.dispatch(new StreetActions.UpdateStreetsByName(payload))
+    this.store.dispatch(new StreetActions.GetStreetsByName(payload))
       .subscribe(resp => {
         this.filteredStreets = resp?.street;
       });
@@ -68,7 +76,7 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
   }
 
   ngOnDestroy() {
-    this.fPassResponseSubscription$ ? this.fPassResponseSubscription$.unsubscribe() : null;
+    this.storeSubscription$ ? this.storeSubscription$.unsubscribe() : null;
   }
 
   selectedStreet(ev: MatAutocompleteSelectedEvent) {
@@ -77,13 +85,10 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
 
   submit(): void {
     if (this.data) {
-      const payload = {};
-      this.fPassResponseSubscription$ = this.store.dispatch(new DrugstoreActions.EditDrugstore(this.drugstore))
-        .subscribe((resp: any) => {
-          if (resp) this.close(true);
-        }, (error => {
-          this.appController.tratarErro(error);
-        }));
+      this.drugstore.foundationDate = new Date(this.drugstore.foundationDate).toLocaleDateString()
+      this.storeSubscription$ = this.store.dispatch(new DrugstoreActions.EditDrugstore(this.drugstore))
+        .subscribe((resp: any) => { if (resp) this.close(true); }, (
+          error => this.appController.tratarErro(error)));
     }
   }
 

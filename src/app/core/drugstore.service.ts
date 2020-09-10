@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { Store } from '@ngxs/store';
-import { DrugstoreActions } from '../state/drugstore/drugstore.actions';
 import { DBActions } from '../state/database/db.actions';
 import { AppDefault } from './app-default';
 
@@ -23,37 +21,56 @@ export class DrugstoreService extends AppDefault {
     return new Promise((resolve, reject) => {
 
     });
-    // this.url = `${environment.server}/${this.base_url}/neighbordhood`;
-    // return this.httpClient.get(this.url, payload).toPromise()
-    //   .catch(err => alert(err.error.detail));
   }
 
   editDrugstore(payload: any) {
     return new Promise((resolve, reject) => {
-      this.store.select(state => {
-        // resolve(state?.drugstore)
-        // id
-      });
-    })
-  }
-
-  async removeDrugstoreById(payload: any) {
-
-  }
-
-  getUpdatedStores(): Promise<any | undefined> {
-    return new Promise((resolve, reject) => {
-      this.store.select(state => resolve(state?.drugstore));
+      this.store.dispatch(new DBActions.GetDrugstores())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          let refAux: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          ref.map((store, index) => { if (store.id == payload.id) refAux.splice(index, 1) });
+          refAux.push(payload);
+          this.store.dispatch(new DBActions.AddDrugstores(refAux));
+          resolve(refAux);
+        });
     });
   }
 
-  getStoresByName(payload: any): Promise<any | undefined> {
+  removeDrugstoreById(payload: any) {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new DBActions.GetDrugstores())
         .subscribe((state: any) => { // 
           let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
-          const filtered = ref.map(street => street.name.includes(payload.name) ? street : null);
+          let refAux: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          ref.map((store, index) => { if (store.id == payload.id) refAux.splice(index, 1) });
+          this.store.dispatch(new DBActions.AddDrugstores(refAux));
+          resolve(refAux);
+        });
+    });
+  }
+
+  async getStoresByName(payload: any): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetDrugstores())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          const filtered = ref.map(store => store.name.toLowerCase().includes(payload.name.toLowerCase()) ? store : null);
           resolve(filtered[0] ? filtered : []);
+        });
+    });
+  }
+
+  async getStoresByStreetName(payload: any): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetDrugstores())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          let refAux: Array<any> = Object.assign([], []);
+          ref.map(store => {
+            if (store.idNeighborhood.name.toLowerCase().includes(payload.name.toLowerCase())) refAux.push(store);
+          });
+          resolve(refAux);
         });
     });
   }

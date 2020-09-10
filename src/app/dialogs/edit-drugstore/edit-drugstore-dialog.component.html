@@ -20,7 +20,7 @@
 
         <mat-form-field color="accent" appearance="outline" style="width: 100%;">
             <mat-label style="color: grey;">Fundação:</mat-label>
-            <input matInput readonly class="font" [value]="drugstore.foundationDate" (dateChange)="setDate($event)" autocomplete='off'
+            <input matInput readonly class="font" [value]="drugstore?.foundationDate" (dateChange)="setDate($event)" autocomplete='off'
                 [matDatepicker]="picker2" [matDatepicker]="picker2" (click)="picker2.open()">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>

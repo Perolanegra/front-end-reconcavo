@@ -52,13 +52,14 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
         const payload = { name: value, max_results: 9999999 };
         this.store.dispatch(new StreetActions.GetStreetsByName(payload))
             .subscribe(resp => {
-                this.filteredStreets = resp?.street;
+                this.filteredStreets = Object.assign([], resp?.street as Array<any>);
             });
     }
 
     submit(): void {
         if (this.form.valid) {
             const { street, ...payload } = this.form.value;
+            payload.foundationDate = new Date(payload.foundationDate).toLocaleDateString();
             this.store.dispatch(new DrugstoreActions.AddDrugstore(payload));
             this.close(true);
         }

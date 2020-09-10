@@ -60,7 +60,8 @@ export const MY_FORMATS = {
     CdkTreeModule,
     MatRippleModule,
     MatSlideToggleModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    // MatMomentDateModule
     // MatTreeModule,
     // MatProgressBarModule
   ],

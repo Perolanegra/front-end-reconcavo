@@ -16,8 +16,8 @@ export namespace DrugstoreActions {
         static readonly type = '[Drugstore] getUpdatedStores';
     }
 
-    export class UpdateStoreByName {
-        static readonly type = '[Drugstore] UpdateStoreByName';
+    export class GetStoreByName {
+        static readonly type = '[Drugstore] GetStoreByName';
         constructor(public payload: { name: string, max_results: number }) { }
     }
 
@@ -29,6 +29,11 @@ export namespace DrugstoreActions {
     export class RemoveDrugstoreById {
         static readonly type = '[Drugstore] RemoveDrugstoreById';
         constructor(public payload: { id: number }) { }
+    }
+    
+    export class GetStoresByStreetName {
+        static readonly type = '[Street] GetStoresByStreetName';
+        constructor(public payload: { name: string, max_results: number }) { }
     }
 
 }

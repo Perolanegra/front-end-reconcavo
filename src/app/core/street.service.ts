@@ -25,17 +25,16 @@ export class StreetService {
     });
   }
 
-  getUpdatedStreets(): void { // return all
-
-  }
-
   getStreetsByName(payload: any): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new DBActions.GetStreets())
         .subscribe((state: any) => { // 
           let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
-          const filtered = ref.map(street => street.name.includes(payload.name) ? street : null);
-          resolve(filtered[0] ? filtered : []);
+          let refAux: Array<any> = Object.assign([], []);
+          ref.map(street => {
+            if (street.name.toLowerCase().includes(payload.name.toLowerCase())) refAux.push(street);
+          });
+          resolve(refAux);
         });
     });
   }

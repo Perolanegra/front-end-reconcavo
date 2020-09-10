@@ -39,14 +39,15 @@ export class StreetState {
 
     @Action(StreetActions.GetUpdatedStreets)
     async getUpdatedStreets({ getState, setState }: StateContext<StreetStateModel>, { }: StreetActions.GetUpdatedStreets) {
-        const data: any = await this.streetService.getUpdatedStreets();
-        if (data) setState(data);
+        const state = getState();
+        setState({ ...state });
     }
 
     @Action(StreetActions.GetStreetsByName)
-    async GetStreetsByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.GetStreetsByName) {
+    async getStreetsByName({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.GetStreetsByName) {
         const data: any = await this.streetService.getStreetsByName(payload);
         if (data) setState(data);
     }
+
 
 }

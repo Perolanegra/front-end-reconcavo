@@ -25,10 +25,12 @@
                     <input matInput class="font" autocomplete='off' formControlName="name" type="text" required>
                 </mat-form-field>
 
-                <mat-form-field class="fade-transition-in font" style="width: 100%;">
-                    <mat-label class="label-info">Data Fundação:</mat-label>
-                    <input matInput class="font" autocomplete='off' formControlName="foundationDate" type="text"
-                        required>
+                <mat-form-field color="accent" class="font" appearance="outline" style="width: 100%;">
+                    <mat-label class="label-info">Fundação:</mat-label>
+                    <input matInput readonly class="font" formControlName="foundationDate" autocomplete='off'
+                        [matDatepicker]="picker2" [matDatepicker]="picker2" (click)="picker2.open()" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2 color="primary"></mat-datepicker>
                 </mat-form-field>
 
                 <div>

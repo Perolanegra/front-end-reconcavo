@@ -473,9 +473,9 @@
                 <div class="terminal">
                     <pre style="color: #1976d2;">Lista de Farmácias Cadastradas</pre>
                     <div class="list align-center-store" *ngFor="let store of filteredDrugstores">
-                        <span style="max-width: 75%;">{{ store?.name }}</span>
-                        <span style="max-width: 75%;">Fundação: {{ store?.foundationDate }}</span>
-                        <span style="max-width: 75%;">{{ store?.roundTheClock ? 'Funcionamento: 24 horas' : '' }}</span>
+                        <span *ngIf="store?.name" style="max-width: 75%;">{{ store?.name }}</span>
+                        <span *ngIf="store?.name" style="max-width: 75%;">Fundação: {{ store?.foundationDate }}</span>
+                        <span *ngIf="store?.name" style="max-width: 75%;">{{ store?.roundTheClock ? 'Funcionamento: 24 horas' : '' }}</span>
 
                         <div class="box-edit">
                             <button tabindex="-1" mat-icon-button (click)="openModal('', store, EditDrugstoreDialogComponent, 'drugstore')">
