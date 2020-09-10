@@ -68,8 +68,12 @@ export class DrugstoreState {
 
     @Action(DrugstoreActions.AddDrugstore)
     async addDrugstore({ getState, setState }: StateContext<DrugstoreStateModel>, { payload }: DrugstoreActions.AddDrugstore) {
-        const data = await this.drugstoreService.addDrugstore(payload);
-        if (data) setState(data);
+        try {
+            const data = await this.drugstoreService.addDrugstore(payload);
+            if (data) setState(data);
+        } catch (error) {
+            throw error;
+        }
     }
 
     @Action(DrugstoreActions.EditDrugstore)

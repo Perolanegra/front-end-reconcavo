@@ -334,7 +334,7 @@
                     <mat-autocomplete autoActiveFirstOption #autoStreet="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event)" [panelWidth]="mobileQuery?.matches ? 'unset' : '300px'"
                         class="align-autocomplete">
-                        <mat-option *ngFor="let street of filteredStreets" [value]="street">
+                        <mat-option *ngFor="let street of filteredStreetsQuery" [value]="street">
                             {{street?.name}}
                         </mat-option>
                     </mat-autocomplete>
@@ -385,8 +385,8 @@
 
                     <mat-autocomplete autoActiveFirstOption #autoDrugstore="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event)" [panelWidth]="mobileQuery?.matches ? 'unset' : '300px'"
-                        class="align-autocomplete">
-                        <mat-option *ngFor="let store of filteredDrugstores" [value]="store">
+                        class="align-autocomplete" [showPanel]="filteredDrugstoresQuery?.length">
+                        <mat-option *ngFor="let store of filteredDrugstoresQuery" [value]="store">
                             {{store?.name}}
                         </mat-option>
                     </mat-autocomplete>

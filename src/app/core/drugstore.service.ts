@@ -80,6 +80,9 @@ export class DrugstoreService extends AppDefault {
       this.store.dispatch(new DBActions.GetDrugstores())
         .subscribe((state: any) => {
           let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          ref.map(store => {
+            if (store.name.toLowerCase().includes(payload.name.toLowerCase())) reject('Farmácia já cadastrada.');
+          });
           payload.id = ref.length ? ref.length + 1 : 1;
           ref = [payload, ...ref];
           this.store.dispatch(new DBActions.AddDrugstores(ref));

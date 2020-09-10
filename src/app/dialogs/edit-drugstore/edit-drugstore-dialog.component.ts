@@ -46,19 +46,21 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
     this.drugstore.foundationDate = new Date(parts[2], parts[1] - 1, parts[0]);
   }
 
-  private updateStreetsByName = (value: string) => {
-    const payload = { name: value, max_results: 9999 };
-    this.store.dispatch(new StreetActions.GetStreetsByName(payload))
-      .subscribe(resp => {
-        this.filteredStreets = resp?.street;
+  private getStreetsByName = (value: string) => {
+    const payload = { name: value, max_results: 99999 };
+    this.store
+      .dispatch(new StreetActions.GetStreetsByName(payload))
+      .subscribe((resp) => {
+        this.filteredStreets = Object.assign([], resp?.street as Array<any>);
       });
   }
 
   onStreetKeyUp(ev: any): void {
     if (ev.target?.value) {
+      this.drugstore.idNeighborhood.id = 0;
       this.drugstore.idNeighborhood.name = ev.target.value;
       if (ev.target.value.length >= 3 && ev.target.value != null && ev.target.value.toString() != '') {
-        this.updateStreetsByName(ev.target.value);
+        this.getStreetsByName(ev.target.value);
       }
     }
   }
@@ -83,13 +85,36 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
     this.drugstore.idNeighborhood = ev.option.value;
   }
 
-  submit(): void {
-    if (this.data) {
-      this.drugstore.foundationDate = new Date(this.drugstore.foundationDate).toLocaleDateString()
-      this.storeSubscription$ = this.store.dispatch(new DrugstoreActions.EditDrugstore(this.drugstore))
-        .subscribe((resp: any) => { if (resp) this.close(true); }, (
-          error => this.appController.tratarErro(error)));
+  async submit() {
+    console.log('store: ', Object.keys(this.drugstore));
+    console.log('store2: ', this.drugstore);
+
+    try {
+      const valid = await this.validate();
+      if (valid) {
+        this.drugstore.foundationDate = new Date(this.drugstore.foundationDate).toLocaleDateString()
+        this.storeSubscription$ = this.store.dispatch(new DrugstoreActions.EditDrugstore(this.drugstore))
+          .subscribe((resp: any) => { if (resp) this.close(true); }, (
+            error => this.appController.tratarErro(error)));
+      }
+    } catch (error) {
+      alert(error);
     }
+
+  }
+
+  async validate(): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      Object.keys(this.drugstore).some((key, index) => {
+        if (!this.drugstore.idNeighborhood.id || this.drugstore[key] === null) {
+          console.log('drugstore: ', this.drugstore)
+          reject('Dados preenchidos incorretamente.');
+        } else {
+          if (index === 4) resolve(true);
+        }
+      });
+
+    });
   }
 
 }

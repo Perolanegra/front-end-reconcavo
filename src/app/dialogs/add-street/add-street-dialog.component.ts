@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, OnDestroy, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { AppController } from 'src/app/core/appController';
 import { FormBuilder, FormControl } from '@angular/forms';

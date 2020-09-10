@@ -29,7 +29,9 @@ import { DateAdapter } from '@angular/material/core';
 })
 export class AppComponent extends NgFormDefault {
   public filteredStreets: any;
+  public filteredStreetsQuery: any;
   public filteredDrugstores: any;
+  public filteredDrugstoresQuery: any;
   public hasMaxResultState = 'disabled';
 
   public mobileQuery: MediaQueryList;
@@ -94,14 +96,6 @@ export class AppComponent extends NgFormDefault {
     this.form.addControl('flg_round_the_clock', new FormControl(null));
   }
 
-  addStreet(params: any) {
-    this.store.dispatch(new StreetActions.AddStreet(params));
-  }
-
-  addDrug(params: any) {
-    this.store.dispatch(new DrugstoreActions.AddDrugstore(params));
-  }
-
   setMaxResultState(ev: any): void {
     this.hasMaxResultState = ev.target.value ? 'enabled' : 'disabled';
   }
@@ -111,7 +105,7 @@ export class AppComponent extends NgFormDefault {
     this.store
       .dispatch(new DrugstoreActions.GetStoreByName(payload))
       .subscribe((resp) => {
-        this.filteredDrugstores = Object.assign([], resp?.drugstore as Array<any>);
+        this.filteredDrugstoresQuery = Object.assign([], resp?.drugstore as Array<any>);
       });
   }
 
@@ -120,7 +114,7 @@ export class AppComponent extends NgFormDefault {
     this.store
       .dispatch(new StreetActions.GetStreetsByName(payload))
       .subscribe((resp) => {
-        this.filteredStreets = Object.assign([], resp?.street as Array<any>);
+        this.filteredStreetsQuery = Object.assign([], resp?.street as Array<any>);
       });
   }
 

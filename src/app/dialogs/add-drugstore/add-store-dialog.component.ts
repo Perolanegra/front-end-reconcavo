@@ -38,14 +38,10 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
 
     setForm() {
         this.form.addControl('name', new FormControl(null));
-        this.form.addControl('roundTheClock', new FormControl(null));
+        this.form.addControl('roundTheClock', new FormControl(false));
         this.form.addControl('street', new FormControl(null));
         this.form.addControl('idNeighborhood', new FormControl(null));
         this.form.addControl('foundationDate', new FormControl(null));
-    }
-
-    selected(ev: any): void {
-
     }
 
     private getStreetsByName = (value: string) => {
@@ -58,19 +54,19 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
 
     submit(): void {
         if (this.form.valid) {
+            if (this.validateAfter()) {
+                alert('Bairro não selecionado ou não cadastrado.');
+                return;
+            }
             const { street, ...payload } = this.form.value;
             payload.foundationDate = new Date(payload.foundationDate).toLocaleDateString();
-            this.store.dispatch(new DrugstoreActions.AddDrugstore(payload));
-            this.close(true);
+            this.store.dispatch(new DrugstoreActions.AddDrugstore(payload))
+                .toPromise().then(() => this.close(true)).catch(error => alert(error));
         }
     }
 
-    public setErrorValidation() {
-        throw new Error("Method not implemented.");
-    }
-
-    public setComponentState() {
-        throw new Error("Method not implemented.");
+    validateAfter(): boolean {
+        return typeof this.form.value.idNeighborhood === 'string';
     }
 
     close(data?: any) {

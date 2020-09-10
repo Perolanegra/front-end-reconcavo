@@ -9,11 +9,11 @@
                     <mat-label class="label-info">Bairro Farmácia:</mat-label>
 
                     <input #inputStoreByStreet matInput autocomplete='off' formControlName="idNeighborhood" type="text"
-                        [matAutocomplete]="autoStreet" />
+                        [matAutocomplete]="autoStreet" required />
 
                     <mat-autocomplete #autoStreet="matAutocomplete" [displayWith]="getNameItem"
-                        (optionSelected)="selected($event)" [panelWidth]="hasMobileMatches ? 'unset' : '300px'"
-                        class="align-autocomplete" [showPanel]="filteredStreets?.length">
+                        [panelWidth]="hasMobileMatches ? 'unset' : '300px'" class="align-autocomplete"
+                        [showPanel]="filteredStreets?.length">
                         <mat-option *ngFor="let street of filteredStreets" [value]="street">
                             {{street?.name}}
                         </mat-option>
