@@ -65,8 +65,11 @@ export class DrugstoreService extends AppDefault {
       this.store.dispatch(new DBActions.GetDrugstores())
         .subscribe((state: any) => { // 
           let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
-          const filtered = ref.map(store => store.name.toLowerCase().includes(payload.name.toLowerCase()) ? store : null);
-          resolve(filtered[0] ? filtered : []);
+          let refAux: Array<any> = Object.assign([], []);
+          ref.map(store => {
+            if (store.name.toLowerCase().includes(payload.name.toLowerCase())) refAux.push(store);
+          });
+          resolve(refAux);
         });
     });
   }

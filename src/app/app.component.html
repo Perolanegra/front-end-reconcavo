@@ -386,7 +386,7 @@
 
                     <mat-autocomplete autoActiveFirstOption #autoDrugstore="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event)" [panelWidth]="mobileQuery?.matches ? 'unset' : '300px'"
-                        class="align-autocomplete" [showPanel]="filteredDrugstoresQuery?.length">
+                        class="align-autocomplete">
                         <mat-option *ngFor="let store of filteredDrugstoresQuery" [value]="store">
                             {{store?.name}}
                         </mat-option>
@@ -415,7 +415,7 @@
                 <mat-form-field class="fade-transition-in font" appearance="outline">
                     <mat-label style="color: grey;">Farmácias por Bairro</mat-label>
                     <input #inputStoreByStreet matInput autocomplete='off' formControlName="storeByStreet" type="text"
-                        [matAutocomplete]="autoStoreByStreet" />
+                        [matAutocomplete]="autoStoreByStreet" (keyup)="verifyLastChar($event)"/>
 
                     <mat-autocomplete #autoStoreByStreet="matAutocomplete" [displayWith]="getNameItem"
                         (optionSelected)="selected($event, true)"

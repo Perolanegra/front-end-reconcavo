@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ChangeDetectorRef, TemplateRef, ViewChild, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { AppController } from './core/appController';
 import { NgFormDefault } from './core/ng-form-default';
 import { FormBuilder, FormControl } from '@angular/forms';
@@ -28,9 +28,10 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
     ]),
   ],
 })
-export class AppComponent extends NgFormDefault {
+export class AppComponent extends NgFormDefault { // falta so fazer o Farmácias por Bairro
 
-  @ViewChild(MatAutocompleteTrigger) autocomplete?: MatAutocompleteTrigger;
+  @ViewChildren(MatAutocompleteTrigger) 
+  public autocompletes?: QueryList<MatAutocompleteTrigger>;
 
   public filteredStreets: any;
   public filteredStreetsQuery: any;
@@ -160,7 +161,11 @@ export class AppComponent extends NgFormDefault {
   }
 
   public verifyLastChar = (ev: KeyboardEvent) => {
-    if (ev.code === 'Backspace' && (ev.target as any)?.value.length <= 1) this.autocomplete?.closePanel();
+    if (ev.code === 'Backspace' && (ev.target as any)?.value.length <= 1) {
+      this.autocompletes?.map((autocomplete: MatAutocompleteTrigger) => {
+        autocomplete.panelOpen ? autocomplete.closePanel() : null;
+      });
+    }
   }
 
   public getUpdatedStreets() {
