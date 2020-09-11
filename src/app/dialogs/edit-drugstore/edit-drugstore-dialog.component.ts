@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, Inject } from '@angular/core';
+import { Component, OnInit, Renderer2, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder } from '@angular/forms';
 import { AppController } from 'src/app/core/appController';
@@ -8,7 +8,7 @@ import { DrugstoreActions } from 'src/app/state/drugstore/drugstore.actions';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppDefault } from 'src/app/core/app-default';
 import { StreetActions } from 'src/app/state/street/street.actions';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { DateAdapter } from '@angular/material/core';
 
 @Component({
@@ -17,6 +17,8 @@ import { DateAdapter } from '@angular/material/core';
   styleUrls: ['./edit-drugstore-dialog.component.scss'],
 })
 export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
+
+  @ViewChild(MatAutocompleteTrigger) autocomplete?: MatAutocompleteTrigger;
 
   private storeSubscription$: Subscription = null as any;
   public drugstore: any;
@@ -55,14 +57,19 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
       });
   }
 
-  onStreetKeyUp(ev: any): void {
-    if (ev.target?.value) {
+  onStreetKeyUp(ev: KeyboardEvent): void {
+    if ((ev.target as any)?.value) {
+      this.verifyLastChar(ev);
       this.drugstore.idNeighborhood.id = 0;
-      this.drugstore.idNeighborhood.name = ev.target.value;
-      if (ev.target.value.length >= 3 && ev.target.value != null && ev.target.value.toString() != '') {
-        this.getStreetsByName(ev.target.value);
+      this.drugstore.idNeighborhood.name = (ev.target as any).value;
+      if ((ev.target as any).value.length >= 3 && (ev.target as any).value != null && (ev.target as any).value.toString() != '') {
+        this.getStreetsByName((ev.target as any).value);
       }
     }
+  }
+
+  public verifyLastChar = (ev: KeyboardEvent) => {
+    if (ev.code === 'Backspace' && (ev.target as any)?.value.length <= 1) this.autocomplete?.closePanel();
   }
 
   getNameItem(item: any) {

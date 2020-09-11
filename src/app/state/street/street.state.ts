@@ -37,10 +37,16 @@ export class StreetState {
         if (data) setState(data);
     }
 
+    @Action(StreetActions.EditStreet)
+    async editStreet({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.EditStreet) {
+        const data: any = await this.streetService.editStreet(payload);
+        if (data) setState(data);
+    }
+
     @Action(StreetActions.GetUpdatedStreets)
     async getUpdatedStreets({ getState, setState }: StateContext<StreetStateModel>, { }: StreetActions.GetUpdatedStreets) {
-        const state = getState();
-        setState({ ...state });
+        const data: any = await this.streetService.getUpdatedStreets();
+        if (data) setState(data);
     }
 
     @Action(StreetActions.GetStreetsByName)
@@ -49,5 +55,10 @@ export class StreetState {
         if (data) setState(data);
     }
 
+    @Action(StreetActions.RemoveStreetById)
+    async removeStreetById({ getState, setState }: StateContext<StreetStateModel>, { payload }: StreetActions.RemoveStreetById) {
+        const data: any = await this.streetService.removeStreetById(payload);
+        if (data) setState(data);
+    }
 
 }

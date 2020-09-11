@@ -9,7 +9,7 @@
                     <mat-label class="label-info">Bairro Farmácia:</mat-label>
 
                     <input #inputStoreByStreet matInput autocomplete='off' formControlName="idNeighborhood" type="text"
-                        [matAutocomplete]="autoStreet" required />
+                        [matAutocomplete]="autoStreet" required (keyup)="verifyLastChar($event)"/>
 
                     <mat-autocomplete #autoStreet="matAutocomplete" [displayWith]="getNameItem"
                         [panelWidth]="hasMobileMatches ? 'unset' : '300px'" class="align-autocomplete"

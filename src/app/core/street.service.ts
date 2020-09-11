@@ -25,7 +25,21 @@ export class StreetService {
     });
   }
 
-  getStreetsByName(payload: any): Promise<any | undefined> {
+  async editStreet(payload: any): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetStreets())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          let refAux: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          ref.map((street, index) => { if (street.id == payload.id) refAux.splice(index, 1) });
+          refAux.push(payload);
+          this.store.dispatch(new DBActions.AddStreets(refAux));
+          resolve(refAux);
+        });
+    });
+  }
+
+  async getStreetsByName(payload: any): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new DBActions.GetStreets())
         .subscribe((state: any) => { // 
@@ -34,6 +48,31 @@ export class StreetService {
           ref.map(street => {
             if (street.name.toLowerCase().includes(payload.name.toLowerCase())) refAux.push(street);
           });
+          resolve(refAux);
+        });
+    });
+  }
+
+  async getUpdatedStreets(): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetStreets())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          resolve(ref);
+        });
+    });
+  }
+
+  async removeStreetById(payload: any): Promise<any | undefined> {
+    console.log('Remove StreetID Service: ', payload);
+    
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetStreets())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          let refAux: Array<any> = Object.assign([], state.db.streets as Array<any>);
+          ref.map((street, index) => { if (street.id == payload.id) refAux.splice(index, 1) });
+          this.store.dispatch(new DBActions.AddStreets(refAux));
           resolve(refAux);
         });
     });

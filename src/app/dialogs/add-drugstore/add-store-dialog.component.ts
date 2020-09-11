@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngxs/store';
 import { FormBuilder, FormControl } from '@angular/forms';
@@ -7,6 +7,7 @@ import { StreetActions } from '../../state/street/street.actions';
 import { NgFormDefault } from 'src/app/core/ng-form-default';
 import { AppController } from 'src/app/core/appController';
 import { DrugstoreActions } from 'src/app/state/drugstore/drugstore.actions';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
     selector: 'app-add-drugstore-dialog',
@@ -14,6 +15,9 @@ import { DrugstoreActions } from 'src/app/state/drugstore/drugstore.actions';
     styleUrls: ['./add-store-dialog.component.scss'],
 })
 export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
+    
+    @ViewChild(MatAutocompleteTrigger) autocomplete?: MatAutocompleteTrigger;
+    
     public filteredStreets: any;
 
     constructor(
@@ -67,6 +71,10 @@ export class AddStoreDialogComponent extends NgFormDefault implements OnInit {
 
     validateAfter(): boolean {
         return typeof this.form.value.idNeighborhood === 'string';
+    }
+
+    public verifyLastChar = (ev: KeyboardEvent) => {
+        if (ev.code === 'Backspace' && (ev.target as any)?.value.length <= 1) this.autocomplete?.closePanel();
     }
 
     close(data?: any) {

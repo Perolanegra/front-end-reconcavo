@@ -84,8 +84,8 @@ export class DrugstoreState {
 
     @Action(DrugstoreActions.GetUpdatedStores)
     async getUpdatedStores({ getState, setState }: StateContext<DrugstoreStateModel>, { }: DrugstoreActions.GetUpdatedStores) {
-        const state = getState();
-        setState({ ...state });
+        const data: any = await this.drugstoreService.getUpdatedStores();
+        if (data) setState(data);
     }
 
     @Action(DrugstoreActions.GetStoreByName)

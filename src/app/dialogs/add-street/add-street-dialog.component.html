@@ -2,7 +2,7 @@
     <div class="content">
         <mat-form-field class="fade-transition-in font" style="width: 100%;">
             <mat-label class="label-info">Informe o nome do Bairro:</mat-label>
-            <input matInput class="font" autocomplete='off' [(ngModel)]="streetName" minlength="3" maxlength="50" type="text" required>
+            <input matInput class="font" autocomplete='off' [(ngModel)]="street.name" minlength="3" maxlength="50" type="text" required>
         </mat-form-field>
 
         <div class="close">
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-    <div class="align-check" [ngClass]="[ streetName ? 'enabled' : 'disabled' ]">
+    <div class="align-check" [ngClass]="[ street?.name ? 'enabled' : 'disabled' ]">
         <button tabindex="-1" mat-icon-button (click)="submit()">
             <mat-icon class="align-check">checked</mat-icon>
         </button>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, TemplateRef } from '@angular/core';
+import { Component, ChangeDetectorRef, TemplateRef, ViewChild } from '@angular/core';
 import { AppController } from './core/appController';
 import { NgFormDefault } from './core/ng-form-default';
 import { FormBuilder, FormControl } from '@angular/forms';
@@ -15,6 +15,7 @@ import { StreetActions } from './state/street/street.actions';
 import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialog.component';
 import { trigger, state, style } from '@angular/animations';
 import { DateAdapter } from '@angular/material/core';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,9 @@ import { DateAdapter } from '@angular/material/core';
   ],
 })
 export class AppComponent extends NgFormDefault {
+
+  @ViewChild(MatAutocompleteTrigger) autocomplete?: MatAutocompleteTrigger;
+
   public filteredStreets: any;
   public filteredStreetsQuery: any;
   public filteredDrugstores: any;
@@ -35,9 +39,9 @@ export class AppComponent extends NgFormDefault {
   public hasMaxResultState = 'disabled';
 
   public mobileQuery: MediaQueryList;
-  public EditDrugstoreDialogComponent = EditDrugstoreDialogComponent;
-  public addStreetDialogComponent = AddStreetDialogComponent;
-  public addStoreDialogComponent = AddStoreDialogComponent;
+  public editDrugstoreDialogComponentRef = EditDrugstoreDialogComponent;
+  public addEditStreetDialogComponentRef = AddStreetDialogComponent;
+  public addStoreDialogComponentRef = AddStoreDialogComponent;
 
   constructor(
     protected appController: AppController,
@@ -52,7 +56,7 @@ export class AppComponent extends NgFormDefault {
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
+    this.mobileQuery.addEventListener('change', this._mobileQueryListener);
   }
 
   private _mobileQueryListener: () => void;
@@ -155,6 +159,10 @@ export class AppComponent extends NgFormDefault {
     });
   }
 
+  public verifyLastChar = (ev: KeyboardEvent) => {
+    if (ev.code === 'Backspace' && (ev.target as any)?.value.length <= 1) this.autocomplete?.closePanel();
+  }
+
   public getUpdatedStreets() {
     this.store.dispatch(new StreetActions.GetUpdatedStreets())
       .subscribe((resp) => {
@@ -174,6 +182,15 @@ export class AppComponent extends NgFormDefault {
       .subscribe((resp) => {
         if (resp) {
           this.getUpdatedStores();
+        }
+      });
+  }
+
+  public removeStreetById(payload: any): void {
+    this.store.dispatch(new StreetActions.RemoveStreetById({ id: payload.id }))
+      .subscribe((resp) => {
+        if (resp) {
+          this.getUpdatedStreets();
         }
       });
   }

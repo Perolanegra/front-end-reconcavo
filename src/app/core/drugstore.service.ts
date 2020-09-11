@@ -23,7 +23,17 @@ export class DrugstoreService extends AppDefault {
     });
   }
 
-  editDrugstore(payload: any) {
+  async getUpdatedStores(): Promise<any | undefined> {
+    return new Promise((resolve, reject) => {
+      this.store.dispatch(new DBActions.GetDrugstores())
+        .subscribe((state: any) => { // 
+          let ref: Array<any> = Object.assign([], state.db.drugstores as Array<any>);
+          resolve(ref);
+        });
+    });
+  }
+
+  async editDrugstore(payload: any): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new DBActions.GetDrugstores())
         .subscribe((state: any) => { // 
@@ -37,7 +47,7 @@ export class DrugstoreService extends AppDefault {
     });
   }
 
-  removeDrugstoreById(payload: any) {
+  async removeDrugstoreById(payload: any): Promise<any | undefined> {
     return new Promise((resolve, reject) => {
       this.store.dispatch(new DBActions.GetDrugstores())
         .subscribe((state: any) => { // 
