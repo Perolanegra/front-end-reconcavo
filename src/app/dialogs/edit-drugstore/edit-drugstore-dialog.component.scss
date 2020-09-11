@@ -42,7 +42,6 @@
   justify-content: center;
 }
 
-
 @media only screen and (max-width: 1024px) {
   ::ng-deep .mat-icon-button i,
   .mat-icon-button .mat-icon {
@@ -69,8 +68,5 @@
 
   .align-close {
     position: relative;
-    // right: -10%;
-    // top: -15%;
   }
-
 }

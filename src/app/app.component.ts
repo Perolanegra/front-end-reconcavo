@@ -15,7 +15,7 @@ import { StreetActions } from './state/street/street.actions';
 import { AddStoreDialogComponent } from './dialogs/add-drugstore/add-store-dialog.component';
 import { trigger, state, style } from '@angular/animations';
 import { DateAdapter } from '@angular/material/core';
-import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +30,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 })
 export class AppComponent extends NgFormDefault { // falta so fazer o Farmácias por Bairro
 
-  @ViewChildren(MatAutocompleteTrigger) 
+  @ViewChildren(MatAutocompleteTrigger)
   public autocompletes?: QueryList<MatAutocompleteTrigger>;
 
   public filteredStreets: any;
@@ -128,22 +128,13 @@ export class AppComponent extends NgFormDefault { // falta so fazer o Farmácias
     this.store
       .dispatch(new DrugstoreActions.GetStoresByStreetName(payload))
       .subscribe((resp) => {
-        this.filteredDrugstores = Object.assign([], resp?.drugstore as Array<any>);
+        this.filteredDrugstoresQuery = Object.assign([], resp?.drugstore as Array<any>);
       });
   }
 
-  selected(ev: any, storeByStreet: boolean = false): void {
-    if (storeByStreet) {
-      const { id, name } = ev.option.value;
-      const submit = { id_neighborhood: id, flg_round_the_clock: name };
-      this.store
-        .dispatch(new DrugstoreActions.GetByStreetId(submit))
-        .subscribe((resp) => {
-          if (resp) {
-            this.openModal('storeByStreetId', resp, DrugstoreDetailDialogComponent);
-          }
-        });
-    }
+  selectStoreByStreet(ev: MatAutocompleteSelectedEvent): void {
+    const payload = { drugstore: [{ ...ev.option.value }] };
+    this.openModal('', payload, DrugstoreDetailDialogComponent, 'drugstore');
   }
 
   openModal(formControlName: string, payload: any,

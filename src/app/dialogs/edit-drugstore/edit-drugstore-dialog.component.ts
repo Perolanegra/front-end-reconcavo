@@ -93,9 +93,6 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
   }
 
   async submit() {
-    console.log('store: ', Object.keys(this.drugstore));
-    console.log('store2: ', this.drugstore);
-
     try {
       const valid = await this.validate();
       if (valid) {
@@ -114,7 +111,6 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
     return new Promise((resolve, reject) => {
       Object.keys(this.drugstore).some((key, index) => {
         if (!this.drugstore.idNeighborhood.id || this.drugstore[key] === null) {
-          console.log('drugstore: ', this.drugstore)
           reject('Dados preenchidos incorretamente.');
         } else {
           if (index === 4) resolve(true);

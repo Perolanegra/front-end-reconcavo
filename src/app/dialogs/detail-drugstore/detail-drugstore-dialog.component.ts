@@ -26,7 +26,6 @@ export class DrugstoreDetailDialogComponent extends AppDefault implements OnInit
 
   ngAfterViewChecked() {
     !this.hasMobileMatches ?? this.renderer.setStyle(document.querySelectorAll('.mat-form-field-wrapper')[3] as any, 'padding-bottom', 'unset');
-    console.log('data: ', this.data);
   }
 
   close(data?: any) {

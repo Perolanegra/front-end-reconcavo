@@ -76,6 +76,12 @@
     width: 100%;
 }
 
+.store-by-street {
+    font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+    display: flex;
+    flex-direction: column;
+}
+
 @media only screen and (max-width: 1024px) {
     .header-flex {
         flex-direction: column;
