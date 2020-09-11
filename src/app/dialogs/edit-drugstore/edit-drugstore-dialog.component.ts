@@ -116,7 +116,6 @@ export class EditDrugstoreDialogComponent extends AppDefault implements OnInit {
           if (index === 4) resolve(true);
         }
       });
-
     });
   }
 
