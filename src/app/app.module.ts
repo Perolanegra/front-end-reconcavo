@@ -44,7 +44,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     HttpClientModule,
     NgxsModule.forRoot([DrugstoreState, AppState, StreetState, DBState], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
-      // key: ['state.prop'],
+      key: ['db.drugstores', 'db.streets'],
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsLoggerPluginModule.forRoot(),
