@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1599867867123,
+  "timestamp": 1599868435949,
   "index": "https://perolanegra.github.io/front-end-reconcavo/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "https://perolanegra.github.io/front-end-reconcavo/favicon.ico",
         "https://perolanegra.github.io/front-end-reconcavo/index.html",
-        "https://perolanegra.github.io/front-end-reconcavo/main.2438e4fcda330a19b8c3.js",
+        "https://perolanegra.github.io/front-end-reconcavo/main.9bc0fac61d7d18759c48.js",
         "https://perolanegra.github.io/front-end-reconcavo/manifest.webmanifest",
         "https://perolanegra.github.io/front-end-reconcavo/polyfills.a4021de53358bb0fec14.js",
         "https://perolanegra.github.io/front-end-reconcavo/runtime.e227d1a0e31cbccbf8ec.js",
@@ -56,8 +56,8 @@
     "https://perolanegra.github.io/front-end-reconcavo/assets/img/logo.png": "9e621ac306c5bc4dc63377e4d023eea4699d2a47",
     "https://perolanegra.github.io/front-end-reconcavo/assets/img/search.png": "96f981f9e84fbe91151fdf9a791b6c82bce20968",
     "https://perolanegra.github.io/front-end-reconcavo/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "https://perolanegra.github.io/front-end-reconcavo/index.html": "984de6d0c2b036b38bbdf376ef8adc0827cdee72",
-    "https://perolanegra.github.io/front-end-reconcavo/main.2438e4fcda330a19b8c3.js": "699cc97a9d00f9a5c476fa2d6f9cb63166d83596",
+    "https://perolanegra.github.io/front-end-reconcavo/index.html": "235a91c392f2c09f48d6f0029d6b06e099b873fb",
+    "https://perolanegra.github.io/front-end-reconcavo/main.9bc0fac61d7d18759c48.js": "741608aa8900e95e0332a2596c602349118a02ab",
     "https://perolanegra.github.io/front-end-reconcavo/manifest.webmanifest": "628ec3460639b6a524379c10d387a6f0def94cd9",
     "https://perolanegra.github.io/front-end-reconcavo/polyfills.a4021de53358bb0fec14.js": "b47435a9ef2a4829f2f9dfd35599bde3614981b1",
     "https://perolanegra.github.io/front-end-reconcavo/runtime.e227d1a0e31cbccbf8ec.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
