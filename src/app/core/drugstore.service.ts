@@ -96,7 +96,7 @@ export class DrugstoreService extends AppDefault {
           ref.map(store => {
             if (store.name.toLowerCase().includes(payload.name.toLowerCase())) {
               reject('Farmácia já cadastrada.');
-              return;
+              throw new Error('');
             }
           });
           payload.id = ref.length ? ref.length + 1 : 1;
