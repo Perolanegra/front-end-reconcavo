@@ -1,7 +1,6 @@
-# reconcavo
+# Acesse
 
-This project was a challenge, that has multiple queries services only with State Management (NGXS).
-Built with Angular v10.
+https://perolanegra.github.io/front-end-reconcavo/
 
 ## Development server
 
